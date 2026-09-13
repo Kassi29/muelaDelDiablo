@@ -1,0 +1,380 @@
+/* ==========================================================================
+   CHAT PAGE - EXACT CANVAS BASED ON chats antes.png & chats dentro.png
+   No synthetic box borders, 100% true to graphic mockups, Rubik typography
+   ========================================================================== */
+
+.chat-page-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 16px 40px 16px;
+  box-sizing: border-box;
+}
+
+/* El lienzo principal usa capas precargadas de fondo PNG */
+.chat-canvas {
+  position: relative;
+  width: 100%;
+  max-width: 1408px;
+  aspect-ratio: 6000 / 4000;
+  user-select: none;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+/* Capas de fondo superpuestas para transición instantánea sin parpadeo */
+.chat-bg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.chat-bg-antes {
+  background-image: url('/assets/chats/chats antes.png');
+  opacity: 1;
+  z-index: 1;
+}
+
+.chat-bg-dentro {
+  background-image: url('/assets/chats/chats dentro.png');
+  opacity: 0;
+  z-index: 2;
+}
+
+.chat-canvas.is-active .chat-bg-antes {
+  opacity: 0;
+}
+
+.chat-canvas.is-active .chat-bg-dentro {
+  opacity: 1;
+}
+
+/* Botón interactivo sobre el título "CHATS" para deseleccionar y volver a vista inicial */
+.chat-back-title-btn {
+  position: absolute;
+  top: 6.8%;
+  left: 7.5%;
+  width: 33%;
+  height: 13.8%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  outline: none;
+}
+
+.chat-back-title-btn:hover {
+  background: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   PANEL IZQUIERDO: 5 RANURAS DE CONTACTOS
+   -------------------------------------------------------------------------- */
+.chat-left-slots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.chat-slot-btn {
+  position: absolute;
+  left: 9.3%;
+  width: 32%;
+  background: transparent;
+  border: none;
+  padding: 0 10px 0 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  pointer-events: auto;
+  outline: none;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+/* Sin animación ni movimiento en hover */
+.chat-slot-btn:hover,
+.chat-slot-btn:focus,
+.chat-slot-btn:active {
+  background: transparent;
+  transform: none;
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+
+/* Selección activa sin efectos (rectángulos invisibles alineados con el fondo) */
+.chat-slot-selected {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  outline: none;
+}
+
+/* Espacio reservado para la foto de perfil alineado */
+.chat-slot-avatar {
+  height: 72%;
+  width: auto;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 0;
+  flex-shrink: 0;
+  background: rgba(242, 187, 75, 0.2);
+  border: 1.5px solid rgba(129, 83, 54, 0.35);
+  box-sizing: border-box;
+}
+
+.chat-slot-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.chat-avatar-icon {
+  width: 58%;
+  height: 58%;
+  opacity: 0.75;
+}
+
+/* Nombre del personaje con fuente RUBIK exacto y color #815336 (+3% en tamaño) */
+.chat-slot-name {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 700;
+  color: #815336;
+  font-size: clamp(0.72rem, 1.5vw, 1.39rem);
+  margin: 0;
+  text-align: left;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+/* --------------------------------------------------------------------------
+   PANEL DERECHO: CHAT ACTIVO
+   -------------------------------------------------------------------------- */
+.chat-right-panel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 6;
+}
+
+/* Header del personaje: subido 50px */
+.chat-right-header {
+  position: absolute;
+  top: calc(19.2% - 41px);
+  left: 47.2%;
+  width: 63%;
+  height: 11.5%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.chat-header-avatar {
+  width: 13.5%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(242, 187, 75, 0.2);
+  border: 1.5px solid rgba(129, 83, 54, 0.35);
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.chat-header-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.chat-header-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.chat-header-name {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 700;
+  color: #815336;
+  font-size: clamp(0.8rem, 1.7vw, 1.55rem);
+  margin: 0;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+/* Área de Mensajes */
+.chat-messages-area {
+  position: absolute;
+  top: 31.5%;
+  bottom: 18.5%;
+  left: 44.8%;
+  width: 44.5%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 10px;
+  box-sizing: border-box;
+  pointer-events: auto;
+}
+
+.chat-msg {
+  display: flex;
+  width: 100%;
+}
+
+.chat-msg-character {
+  justify-content: flex-start;
+}
+
+.chat-msg-user {
+  justify-content: flex-end;
+}
+
+.chat-msg-bubble {
+  max-width: 82%;
+  padding: 8px 14px;
+  font-family: 'Rubik', sans-serif;
+  font-size: clamp(0.75rem, 1.3vw, 1.15rem);
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.chat-msg-character .chat-msg-bubble {
+  background: #6B4226;
+  color: #F5E6D0;
+  border-radius: 16px 16px 16px 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.chat-msg-user .chat-msg-bubble {
+  background: #D98A3B;
+  color: #3D2210;
+  border-radius: 16px 16px 4px 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.chat-msg-text {
+  display: block;
+}
+
+.chat-msg-time {
+  display: block;
+  font-size: 0.7em;
+  text-align: right;
+  margin-top: 3px;
+  opacity: 0.7;
+}
+
+/* Indicador escribiendo */
+.chat-typing {
+  position: absolute;
+  bottom: 17%;
+  left: 45%;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 6px 10px;
+  background: #6B4226;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+}
+
+@keyframes typingDotBounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.chat-typing-dot {
+  width: 6px;
+  height: 6px;
+  background: #F5E6D0;
+  border-radius: 50%;
+  animation: typingDotBounce 0.6s infinite ease-in-out;
+}
+
+.chat-typing-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.chat-typing-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* Input inferior superpuesto */
+.chat-input-form {
+  position: absolute;
+  bottom: calc(5.2% + 15px);
+  /* Subido 15px */
+  left: 46%;
+  width: 46.5%;
+  height: 10.5%;
+  display: flex;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.chat-input-element {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 700;
+  color: #4A2A12;
+  text-transform: uppercase;
+  font-size: clamp(0.75rem, 1.5vw, 1.25rem);
+  outline: none;
+  padding: 0 10px;
+}
+
+.chat-input-element::placeholder {
+  color: #8B5830;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+.chat-send-trigger {
+  width: 14%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}

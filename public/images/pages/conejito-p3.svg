@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="100%" height="100%">
+    <rect width="600" height="800" fill="#FFF8F0"/>
+    <rect x="20" y="20" width="560" height="760" rx="20" fill="none" stroke="#547398" stroke-width="8"/>
+    
+    <text x="300" y="100" font-family="'Fredoka', sans-serif" font-size="28" fill="#3D2B1F" text-anchor="middle" font-weight="bold">Página 3: ¡Aparece la Liebre!</text>
+    
+    <rect x="50" y="550" width="500" height="200" rx="15" fill="#FFFFFF" stroke="#E6DCD0" stroke-width="4"/>
+    <text x="80" y="590" font-family="'Nunito', sans-serif" font-size="20" fill="#3D2B1F">Un día, una liebre inmensa y feroz apareció</text>
+    <text x="80" y="625" font-family="'Nunito', sans-serif" font-size="20" fill="#3D2B1F">y se apoderó de una de las hermanitas.</text>
+    <text x="80" y="660" font-family="'Nunito', sans-serif" font-size="22" fill="#F28157" font-weight="bold">"Les devolveré a su hija si me traen cinco</text>
+    <text x="80" y="695" font-family="'Nunito', sans-serif" font-size="22" fill="#F28157" font-weight="bold">sacos llenos de zanahorias", rugió con fuerza.</text>
+
+    <!-- Liebre malvada -->
+    <ellipse cx="300" cy="350" rx="70" ry="90" fill="#7A6B5D" stroke="#3D2B1F" stroke-width="3"/>
+    <text x="300" y="340" font-size="50" text-anchor="middle">😈</text>
+    <text x="220" y="430" font-size="30">🐰</text>
+  </svg>

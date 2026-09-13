@@ -1,0 +1,114 @@
+/* ==========================================================================
+   STORIES GRID & CARD STYLES - WITH OFFICIAL COVERS & PERGAMINOS
+   ========================================================================== */
+.stories-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 16px 16px 60px 16px;
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.stories-header-papiro {
+  width: 100%;
+  max-width: 744px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.stories-title-papiro {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.22));
+}
+
+.stories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(336px, 384px));
+  gap: 40px 36px;
+  justify-content: center;
+  width: 100%;
+  max-width: 1260px;
+}
+
+.story-card {
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.25s ease;
+  transform: translateY(0);
+}
+
+.story-card:hover {
+  transform: translateY(-8px) scale(1.03);
+}
+
+/* Contenedor del papiro con el nombre del cuento (arriba) */
+.story-pergamino-container {
+  width: 100%;
+  max-width: 384px;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: center;
+}
+
+.story-pergamino-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.22));
+  transition: transform 0.25s ease;
+}
+
+.story-card:hover .story-pergamino-img {
+  transform: scale(1.04);
+}
+
+/* Contenedor de la portada SVG oficial del libro (abajo) */
+.story-cover-container {
+  width: 100%;
+  max-width: 384px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.story-cover-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.story-card:hover .story-cover-img {
+  filter: drop-shadow(0 0 20px rgba(255, 230, 100, 0.75))
+    drop-shadow(0 12px 28px rgba(0, 0, 0, 0.35));
+}
+
+@media (max-width: 680px) {
+  .stories-grid {
+    grid-template-columns: 1fr;
+    max-width: 330px;
+  }
+
+  .stories-header-papiro {
+    max-width: 90%;
+  }
+}
+

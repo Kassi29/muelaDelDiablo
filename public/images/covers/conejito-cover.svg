@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 550" width="100%" height="100%">
+    <rect width="400" height="550" fill="#F2BB4B"/>
+    <circle cx="200" cy="220" r="110" fill="#FFF8E7"/>
+    <!-- Orejas -->
+    <ellipse cx="160" cy="90" rx="30" ry="80" fill="#FFF8E7" transform="rotate(-15, 160, 90)"/>
+    <ellipse cx="160" cy="90" rx="15" ry="60" fill="#F26671" transform="rotate(-15, 160, 90)"/>
+    <ellipse cx="240" cy="90" rx="30" ry="80" fill="#FFF8E7" transform="rotate(15, 240, 90)"/>
+    <ellipse cx="240" cy="90" rx="15" ry="60" fill="#F26671" transform="rotate(15, 240, 90)"/>
+    <!-- Cara del conejito -->
+    <ellipse cx="200" cy="220" rx="75" ry="65" fill="#FFF8E7"/>
+    <!-- Ojos tristes (llorando) -->
+    <path d="M 170 210 Q 180 200 185 210" stroke="#3D2B1F" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M 215 210 Q 220 200 230 210" stroke="#3D2B1F" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <!-- Lágrimas -->
+    <circle cx="172" cy="225" r="10" fill="#547398"/>
+    <path d="M 172 225 L 172 245 C 172 250 168 250 168 245 Z" fill="#547398"/>
+    <circle cx="228" cy="225" r="8" fill="#547398"/>
+    <!-- Nariz -->
+    <polygon points="190,230 210,230 200,240" fill="#F26671"/>
+    <!-- Boca -->
+    <path d="M 195 246 Q 200 250 205 246" stroke="#3D2B1F" stroke-width="3" fill="none"/>
+    <!-- Título -->
+    <rect x="30" y="380" width="340" height="120" rx="20" fill="#FFFFFF" stroke="#748A63" stroke-width="6"/>
+    <text x="200" y="430" font-family="'Fredoka', sans-serif" font-weight="bold" font-size="28" fill="#F26671" text-anchor="middle">EL CONEJITO</text>
+    <text x="200" y="475" font-family="'Fredoka', sans-serif" font-weight="bold" font-size="34" fill="#547398" text-anchor="middle">LLORÓN 💧</text>
+  </svg>

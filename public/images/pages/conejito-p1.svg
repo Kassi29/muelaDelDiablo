@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="100%" height="100%">
+    <rect width="600" height="800" fill="#FFF8F0"/>
+    <rect x="20" y="20" width="560" height="760" rx="20" fill="none" stroke="#748A63" stroke-width="8"/>
+    <!-- Bosque background -->
+    <circle cx="100" cy="500" r="250" fill="#748A63" opacity="0.3"/>
+    <circle cx="500" cy="520" r="220" fill="#748A63" opacity="0.3"/>
+    <!-- Sol -->
+    <circle cx="500" cy="120" r="60" fill="#F2BB4B" opacity="0.6"/>
+    
+    <!-- Texto ilustrativo de la página física -->
+    <text x="300" y="100" font-family="'Fredoka', sans-serif" font-size="28" fill="#3D2B1F" text-anchor="middle" font-weight="bold">Página 1: La Familia Conejo</text>
+    
+    <!-- Cuadro de texto simulado de libro -->
+    <rect x="50" y="550" width="500" height="200" rx="15" fill="#FFFFFF" stroke="#E6DCD0" stroke-width="4"/>
+    <text x="80" y="590" font-family="'Nunito', sans-serif" font-size="20" fill="#3D2B1F">Había una vez un conejito que vivía con sus</text>
+    <text x="80" y="625" font-family="'Nunito', sans-serif" font-size="20" fill="#3D2B1F">papás conejos y sus hermanitas en un hermoso</text>
+    <text x="80" y="660" font-family="'Nunito', sans-serif" font-size="20" fill="#3D2B1F">bosque. Eran muy unidos. Papá Conejo era</text>
+    <text x="80" y="695" font-family="'Nunito', sans-serif" font-size="20" fill="#3D2B1F">grande, regordete y llevaba lentes de profesor.</text>
+    
+    <!-- Dibujo de la familia conejito -->
+    <!-- Papá conejo -->
+    <ellipse cx="220" cy="380" rx="55" ry="70" fill="#FFF8E7" stroke="#3D2B1F" stroke-width="3"/>
+    <circle cx="200" cy="340" r="8" fill="none" stroke="#3D2B1F" stroke-width="4"/>
+    <circle cx="240" cy="340" r="8" fill="none" stroke="#3D2B1F" stroke-width="4"/>
+    <line x1="208" y1="340" x2="232" y2="340" stroke="#3D2B1F" stroke-width="3"/>
+    
+    <!-- Mamá coneja -->
+    <ellipse cx="360" cy="400" rx="45" ry="60" fill="#FFF8E7" stroke="#3D2B1F" stroke-width="3"/>
+    <path d="M 335 370 Q 360 360 385 370" stroke="#F26671" stroke-width="5" fill="none"/>
+  </svg>

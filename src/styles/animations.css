@@ -1,0 +1,105 @@
+/* ==========================================================================
+   ANIMACIONES INFANTILES Y DE TRANSICIÓN
+   ========================================================================== */
+
+/* Entrada suave */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.anim-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* Rebote infantil divertido */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.anim-bounce {
+  animation: bounce 2s infinite ease-in-out;
+}
+
+.anim-bounce-hover:hover {
+  animation: bounce 0.6s infinite ease-in-out;
+}
+
+/* Wiggle / Balanceo */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+.anim-wiggle-hover:hover {
+  animation: wiggle 0.3s infinite ease-in-out;
+  display: inline-block;
+}
+
+/* 3D Page Flip Forward & Backward */
+@keyframes flipForward {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(-180deg);
+  }
+}
+
+@keyframes flipBackward {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(180deg);
+  }
+}
+
+/* Efecto de pulso suave */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(242, 102, 113, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(242, 102, 113, 0);
+  }
+}
+
+.anim-pulse-glow {
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+/* Confeti cayendo para felicitaciones */
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.confetti-particle {
+  position: absolute;
+  top: -20px;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  animation: confettiFall 3s linear forwards;
+  z-index: 999;
+  pointer-events: none;
+}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+    <circle cx="50" cy="50" r="50" fill="#F2D194"/>
+    <!-- Orejas -->
+    <ellipse cx="40" cy="25" rx="10" ry="25" fill="#FFF8E7" transform="rotate(-10, 40, 25)"/>
+    <ellipse cx="40" cy="25" rx="5" ry="18" fill="#F26671" transform="rotate(-10, 40, 25)"/>
+    <ellipse cx="60" cy="25" rx="10" ry="25" fill="#FFF8E7" transform="rotate(10, 60, 25)"/>
+    <ellipse cx="60" cy="25" rx="5" ry="18" fill="#F26671" transform="rotate(10, 60, 25)"/>
+    <!-- Cara conejito -->
+    <circle cx="50" cy="62" r="28" fill="#FFF8E7"/>
+    <!-- Ojos tristes -->
+    <path d="M 40 58 Q 44 54 46 58" stroke="#3D2B1F" stroke-width="3" fill="none"/>
+    <path d="M 54 58 Q 56 54 60 58" stroke="#3D2B1F" stroke-width="3" fill="none"/>
+    <circle cx="41" cy="64" r="4" fill="#547398"/>
+    <!-- Nariz -->
+    <polygon points="47,65 53,65 50,69" fill="#F26671"/>
+  </svg>
