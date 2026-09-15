@@ -80,6 +80,16 @@ body {
   background-color: #8FD5EC;
 }
 
+/* Cursor normal para toda la página, incluyendo botones (sobrescribe hover) */
+* {
+  cursor: url('/assets/mouse/CURSOR%20NORMAL.svg') 0 0, auto !important;
+}
+
+/* Cursor de click solo al presionar (active) */
+*:active {
+  cursor: url('/assets/mouse/CURSOR%20CLICK.svg') 0 0, pointer !important;
+}
+
 h1,
 h2,
 h3,

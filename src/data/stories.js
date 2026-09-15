@@ -3,7 +3,7 @@ export const storiesData = [
     id: 'la-muela',
     title: 'La Muela del Diablo',
     folder: 'La Muela del Diablo',
-    pageCount: 3,
+    pageCount: 4,
     coverColor: '#C0392B',
     theme: { primary: '#C0392B', dark: '#922B21' },
     coverImage: '/assets/cuentos/Elementos p[agina cuentos/portadas LIBROs FINAL/MUELA DEL DIABLO.svg',
@@ -20,18 +20,20 @@ export const storiesData = [
         ]
       },
       differences: {
+        imageNormal: '/assets/juegos/ENCUENTRA DIFERENCIAS/diferencias muela normal.png',
+        imageModified: '/assets/juegos/ENCUENTRA DIFERENCIAS/diferencias muela cambios.png',
         items: [
-          { id: '1', name: 'Cuerno del diablo', x: 25, y: 20, radius: 7 },
-          { id: '2', name: 'Llama de fuego', x: 70, y: 35, radius: 6 },
-          { id: '3', name: 'Roca del fondo', x: 50, y: 65, radius: 8 },
-          { id: '4', name: 'Dinosaurio caído', x: 80, y: 75, radius: 7 },
-          { id: '5', name: 'Nube de humo', x: 15, y: 50, radius: 6 }
+          { id: '1', name: 'Diferencia 1', x: 59, y: 58, radius: 7 },
+          { id: '2', name: 'Diferencia 2', x: 85, y: 46, radius: 7 },
+          { id: '3', name: 'Diferencia 3', x: 47, y: 18, radius: 7 },
+          { id: '4', name: 'Diferencia 4', x: 19, y: 13, radius: 7 },
+          { id: '5', name: 'Diferencia 5', x: 12, y: 43, radius: 7 }
         ]
       },
       find: {
         label: 'Muelas del Diablo',
         emoji: '🦷',
-        searchImage: '/assets/juegos/la-muela.svg',
+        searchImage: '/assets/juegos/ENCUENTRA LOS OBJETOS/ENCUENTRA MUELA.png',
         items: [
           { id: 'muela-1', x: 22, y: 40, size: 26 },
           { id: 'muela-2', x: 65, y: 25, size: 22 },
@@ -46,7 +48,7 @@ export const storiesData = [
     id: 'la-nina',
     title: 'La Niña y el Espejo',
     folder: 'La ninia y el espejo',
-    pageCount: 5,
+    pageCount: 7,
     coverColor: '#8E44AD',
     theme: { primary: '#8E44AD', dark: '#6C3483' },
     coverImage: '/assets/cuentos/Elementos p[agina cuentos/portadas LIBROs FINAL/LA NIÑA Y EL ESPEJO.svg',
@@ -63,18 +65,20 @@ export const storiesData = [
         ]
       },
       differences: {
+        imageNormal: '/assets/juegos/ENCUENTRA DIFERENCIAS/diferencias niña normal.png',
+        imageModified: '/assets/juegos/ENCUENTRA DIFERENCIAS/diferencias niña cambios.png',
         items: [
-          { id: '1', name: 'Marco del espejo', x: 30, y: 25, radius: 7 },
-          { id: '2', name: 'Flor del vestido', x: 65, y: 45, radius: 6 },
-          { id: '3', name: 'Ventana del palacio', x: 80, y: 20, radius: 8 },
-          { id: '4', name: 'Color de las colinas', x: 15, y: 70, radius: 7 },
-          { id: '5', name: 'Candelabro', x: 50, y: 80, radius: 6 }
+          { id: '1', name: 'Diferencia 1', x: 74, y: 12, radius: 7 },
+          { id: '2', name: 'Diferencia 2', x: 37, y: 58, radius: 7 },
+          { id: '3', name: 'Diferencia 3', x: 34, y: 39, radius: 7 },
+          { id: '4', name: 'Diferencia 4', x: 63, y: 64, radius: 7 },
+          { id: '5', name: 'Diferencia 5', x: 71, y: 32, radius: 7 }
         ]
       },
       find: {
         label: 'Espejos',
         emoji: '🪞',
-        searchImage: '/assets/juegos/la-nina.svg',
+        searchImage: '/assets/juegos/ENCUENTRA LOS OBJETOS/ENCUENTRA NIÑA.png',
         items: [
           { id: 'espejo-1', x: 30, y: 68, size: 26 },
           { id: 'espejo-2', x: 75, y: 58, size: 22 },
@@ -89,7 +93,7 @@ export const storiesData = [
     id: 'conejito-lloron',
     title: 'El Conejito Llorón',
     folder: 'El conejito lloron',
-    pageCount: 3,
+    pageCount: 4,
     coverColor: '#27AE60',
     theme: { primary: '#27AE60', dark: '#1E8449' },
     coverImage: '/assets/cuentos/Elementos p[agina cuentos/portadas LIBROs FINAL/CONEJITO LLORÓN.svg',
@@ -106,18 +110,20 @@ export const storiesData = [
         ]
       },
       differences: {
+        imageNormal: '/assets/juegos/ENCUENTRA DIFERENCIAS/diferencias conejo normal.png',
+        imageModified: '/assets/juegos/ENCUENTRA DIFERENCIAS/diferencias conejo cambios.png',
         items: [
-          { id: '1', name: 'Nube que falta', x: 80, y: 15, radius: 8 },
-          { id: '2', name: 'Gafas del Papá Conejo', x: 45, y: 42, radius: 6 },
-          { id: '3', name: 'Mariposa en el aire', x: 22, y: 32, radius: 7 },
-          { id: '4', name: 'Color del Hongo', x: 73, y: 82, radius: 8 },
-          { id: '5', name: 'Flor adicional', x: 12, y: 88, radius: 7 }
+          { id: '1', name: 'Diferencia 1', x: 87, y: 9, radius: 7 },
+          { id: '2', name: 'Diferencia 2', x: 95, y: 76, radius: 7 },
+          { id: '3', name: 'Diferencia 3', x: 55, y: 94, radius: 7 },
+          { id: '4', name: 'Diferencia 4', x: 11, y: 50, radius: 7 },
+          { id: '5', name: 'Diferencia 5', x: 29, y: 14, radius: 7 }
         ]
       },
       find: {
         label: 'Zanahorias',
         emoji: '🥕',
-        searchImage: '/assets/juegos/conejito.svg',
+        searchImage: '/assets/juegos/ENCUENTRA LOS OBJETOS/ENCUENTRA CONEJITO.png',
         items: [
           { id: 'carrot-1', x: 28, y: 73, size: 28 },
           { id: 'carrot-2', x: 78, y: 64, size: 24 },
@@ -132,7 +138,7 @@ export const storiesData = [
     id: 'quirquinchos',
     title: 'Los Quirquinchos de las Dunas de San Pedro',
     folder: 'Los quirquinchos de las dunas de San Pedro',
-    pageCount: 4,
+    pageCount: 6,
     coverColor: '#E67E22',
     theme: { primary: '#E67E22', dark: '#CA6F1E' },
     coverImage: '/assets/cuentos/Elementos p[agina cuentos/portadas LIBROs FINAL/QUIRQUINCHOS.svg',
@@ -149,18 +155,20 @@ export const storiesData = [
         ]
       },
       differences: {
+        imageNormal: '/assets/juegos/ENCUENTRA DIFERENCIAS/diferencias quirquincho normal.png',
+        imageModified: '/assets/juegos/ENCUENTRA DIFERENCIAS/diferencias quirquincho cambios.png',
         items: [
-          { id: '1', name: 'Cactus del fondo', x: 20, y: 30, radius: 7 },
-          { id: '2', name: 'Caparazón del quirquincho', x: 55, y: 55, radius: 6 },
-          { id: '3', name: 'Color de la arena', x: 75, y: 80, radius: 8 },
-          { id: '4', name: 'Sombrero del padre', x: 35, y: 20, radius: 7 },
-          { id: '5', name: 'Charango del niño', x: 82, y: 40, radius: 6 }
+          { id: '1', name: 'Diferencia 1', x: 50, y: 13, radius: 7 },
+          { id: '2', name: 'Diferencia 2', x: 50, y: 53, radius: 7 },
+          { id: '3', name: 'Diferencia 3', x: 48, y: 70, radius: 7 },
+          { id: '4', name: 'Diferencia 4', x: 66, y: 63, radius: 7 },
+          { id: '5', name: 'Diferencia 5', x: 45, y: 79, radius: 7 }
         ]
       },
       find: {
         label: 'Quirquinchos',
         emoji: '🦔',
-        searchImage: '/assets/juegos/quirquincho.svg',
+        searchImage: '/assets/juegos/ENCUENTRA LOS OBJETOS/ENCUENTRA QUIRQUINCHO.png',
         items: [
           { id: 'quirq-1', x: 25, y: 70, size: 26 },
           { id: 'quirq-2', x: 72, y: 60, size: 22 },
@@ -175,7 +183,7 @@ export const storiesData = [
     id: 'tortugas',
     title: 'La Triste Historia de las Tortuguitas que Quisieron Llegar a la Luna',
     folder: 'La triste historia de las tortuguitas que quisieron llegar a la luna',
-    pageCount: 4,
+    pageCount: 6,
     coverColor: '#2980B9',
     theme: { primary: '#2980B9', dark: '#21618C' },
     coverImage: '/assets/cuentos/Elementos p[agina cuentos/portadas LIBROs FINAL/TORTUGAS.svg',
@@ -192,18 +200,20 @@ export const storiesData = [
         ]
       },
       differences: {
+        imageNormal: '/assets/juegos/ENCUENTRA DIFERENCIAS/diferencias tortugas normal.png',
+        imageModified: '/assets/juegos/ENCUENTRA DIFERENCIAS/diferencias tortugas cambios.png',
         items: [
-          { id: '1', name: 'Luna en el cielo', x: 78, y: 12, radius: 8 },
-          { id: '2', name: 'Estrella fugaz', x: 30, y: 20, radius: 6 },
-          { id: '3', name: 'Agua de la fuente', x: 50, y: 50, radius: 7 },
-          { id: '4', name: 'Tortuga del fondo', x: 20, y: 75, radius: 7 },
-          { id: '5', name: 'Adorno de la fuente', x: 72, y: 68, radius: 6 }
+          { id: '1', name: 'Diferencia 1', x: 52, y: 44, radius: 7 },
+          { id: '2', name: 'Diferencia 2', x: 50, y: 70, radius: 7 },
+          { id: '3', name: 'Diferencia 3', x: 78, y: 23, radius: 7 },
+          { id: '4', name: 'Diferencia 4', x: 74, y: 54, radius: 7 },
+          { id: '5', name: 'Diferencia 5', x: 12, y: 29, radius: 7 }
         ]
       },
       find: {
         label: 'Tortuguitas',
         emoji: '🐢',
-        searchImage: '/assets/juegos/tortugas.svg',
+        searchImage: '/assets/juegos/ENCUENTRA LOS OBJETOS/ENCUENTRA TORTUGAS.png',
         items: [
           { id: 'tort-1', x: 28, y: 72, size: 26 },
           { id: 'tort-2', x: 76, y: 62, size: 22 },

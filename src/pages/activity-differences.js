@@ -38,7 +38,7 @@ export function renderActivityDifferences(container) {
           <!-- Primera madera cuadrada (Original) -->
           <div class="diff-wood-box">
             <div class="image-pane-wrapper" id="pane-left">
-              <img class="image-pane" src="/images/covers/conejito-cover.svg" alt="Imagen Original" onerror="this.src='https://placehold.co/400x550/f2bb4b/3d2b1f?text=Original'">
+              <img class="image-pane" src="${story.gameData.differences.imageNormal}" alt="Imagen Original" onerror="this.src='https://placehold.co/400x550/f2bb4b/3d2b1f?text=Original'">
               <div class="diff-overlay" id="overlay-left"></div>
             </div>
           </div>
@@ -46,7 +46,7 @@ export function renderActivityDifferences(container) {
           <!-- Segunda madera cuadrada (Con Cambios) -->
           <div class="diff-wood-box">
             <div class="image-pane-wrapper" id="pane-right">
-              <img class="image-pane" src="/images/covers/conejito-cover.svg" alt="Imagen Modificada" onerror="this.src='https://placehold.co/400x550/f2bb4b/3d2b1f?text=Modificada'" style="filter: hue-rotate(10deg);">
+              <img class="image-pane" src="${story.gameData.differences.imageModified}" alt="Imagen Modificada" onerror="this.src='https://placehold.co/400x550/f2bb4b/3d2b1f?text=Modificada'">
               <div class="diff-overlay" id="overlay-right"></div>
             </div>
           </div>
@@ -101,16 +101,22 @@ export function renderActivityDifferences(container) {
     paneRight.addEventListener('click', (e) => handleInteraction(e, paneRight));
     
     differencesList.forEach(diff => {
-      const element = document.createElement('div');
-      element.className = `diff-target diff-item-${diff.id}`;
-      element.style.left = `${diff.x}%`;
-      element.style.top = `${diff.y}%`;
-      element.style.width = '30px';
-      element.style.height = '30px';
-      element.style.borderRadius = '50%';
-      element.style.border = '2px dashed rgba(242, 102, 113, 0.4)';
-      element.style.backgroundColor = 'rgba(242, 209, 148, 0.2)';
-      overlayRight.appendChild(element);
+      // Hints sutiles solo en hover
+      const elementLeft = document.createElement('div');
+      elementLeft.className = `diff-target diff-item-${diff.id}`;
+      elementLeft.style.left = `${diff.x}%`;
+      elementLeft.style.top = `${diff.y}%`;
+      elementLeft.style.width = `${diff.radius * 2}%`;
+      elementLeft.style.height = `${diff.radius * 2}%`;
+      overlayLeft.appendChild(elementLeft);
+
+      const elementRight = document.createElement('div');
+      elementRight.className = `diff-target diff-item-${diff.id}`;
+      elementRight.style.left = `${diff.x}%`;
+      elementRight.style.top = `${diff.y}%`;
+      elementRight.style.width = `${diff.radius * 2}%`;
+      elementRight.style.height = `${diff.radius * 2}%`;
+      overlayRight.appendChild(elementRight);
     });
   }
 
@@ -136,46 +142,41 @@ export function renderActivityDifferences(container) {
   }
 
   function showWinScreen() {
-    container.innerHTML = `
-      <div class="game-layout anim-fade-in">
-        <div class="game-top-nav">
-          <button class="btn-game-nav btn-nav-back" id="exit-win-btn" title="Atrás" aria-label="Atrás">
-            <img src="/assets/boton retroceder.png" alt="Atrás" class="btn-nav-arrow-img" />
-            <span class="btn-nav-text">Atrás</span>
-          </button>
-          <button class="btn-game-nav btn-nav-next" id="next-win-btn" title="Siguiente Actividad" aria-label="Siguiente Actividad">
-            <span class="btn-nav-text">Siguiente Actividad</span>
-            <img src="/assets/juegos/flecha siguiente activdad.png" alt="Siguiente Actividad" class="btn-nav-arrow-img" />
-          </button>
-        </div>
-
-        <div class="game-title-container">
-          <img src="/assets/juegos/juegos elementos pag/espejo roto.png" alt="Espejo Roto" class="game-title-img" />
-        </div>
-        <div class="game-container game-container-win game-container-win-large">
-          <div class="win-overlay">
-            <h2 class="win-title">¡Qué Buena Vista Tienes!</h2>
-            <p class="win-text">Has encontrado las 5 diferencias. ¡Tu atención al detalle es asombrosa!</p>
-          </div>
-        </div>
-      </div>
-    `;
-
+    const gameLayout = container.querySelector('.game-layout');
+    if (gameLayout) {
+      gameLayout.style.position = 'relative';
+      const overlay = document.createElement('div');
+      overlay.className = 'activity-win-banner-overlay anim-fade-in';
+      overlay.innerHTML = `
+        <img src="/assets/juegos/juegos elementos pag/bien hecho (1).png" alt="Bien Hecho" class="win-banner-img" />
+        <button class="win-next-arrow-btn" id="overlay-next-btn" title="Siguiente Actividad">
+          <img src="/assets/juegos/flecha siguiente activdad.png" alt="Siguiente Actividad" />
+        </button>
+      `;
+      gameLayout.appendChild(overlay);
+      
+      const nextBtn = document.getElementById('overlay-next-btn');
+      if (nextBtn) {
+        nextBtn.addEventListener('click', goNext);
+      }
+    }
     launchConfetti();
-    document.getElementById('exit-win-btn')?.addEventListener('click', goBack);
-    document.getElementById('next-win-btn')?.addEventListener('click', goNext);
   }
 
   function launchConfetti() {
+    const titleContainer = container.querySelector('.game-title-container');
+    if (titleContainer) titleContainer.style.position = 'relative';
+    const targetEl = titleContainer || document.body;
+
     const colors = ['#F26671', '#F2BB4B', '#F28157', '#748A63', '#547398'];
     for (let i = 0; i < 50; i++) {
       const particle = document.createElement('div');
       particle.className = 'confetti-particle';
-      particle.style.left = Math.random() * 100 + 'vw';
+      particle.style.left = (Math.random() * 80 + 10) + '%';
+      particle.style.top = (Math.random() * 100) + '%';
       particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      particle.style.animationDelay = Math.random() * 2 + 's';
-      particle.style.transform = `scale(${Math.random() * 0.6 + 0.6})`;
-      document.body.appendChild(particle);
+      particle.style.animationDelay = Math.random() * 1.5 + 's';
+      targetEl.appendChild(particle);
       setTimeout(() => { particle.remove(); }, 5000);
     }
   }

@@ -182,7 +182,6 @@
   height: auto;
   display: block;
   border-radius: 16px;
-  filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.25));
 }
 
 /* Estilos de botones de íconos sobre el mapa */
@@ -284,7 +283,6 @@
   height: auto;
   display: block;
   border-radius: 16px;
-  filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.2));
 }
 
 /* Cartas de juegos desordenadas sobre el fondo del piso */
@@ -305,7 +303,6 @@
   height: auto;
   display: block;
   border-radius: 12px;
-  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
 }
 
 .juego-card:hover {

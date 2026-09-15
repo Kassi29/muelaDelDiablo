@@ -97,41 +97,33 @@ export function renderActivityFind(container) {
   }
 
   function showWinScreen() {
-    container.innerHTML = `
-      <div class="game-layout anim-fade-in">
-        <div class="game-top-nav game-top-nav-single">
-          <button class="btn-game-nav btn-nav-back" id="exit-win-btn" title="Atrás" aria-label="Atrás">
-            <img src="/assets/boton retroceder.png" alt="Atrás" class="btn-nav-arrow-img" />
-            <span class="btn-nav-text">Atrás</span>
-          </button>
-        </div>
-
-        <div class="game-title-container">
-          <img src="/assets/juegos/juegos elementos pag/la b'usqueda m'agica.png" alt="La Búsqueda Mágica" class="game-title-img" />
-        </div>
-        <div class="game-container game-container-win game-container-win-find">
-          <div class="win-overlay">
-            <h2 class="win-title">¡Lo Lograste Aventurero!</h2>
-            <p class="win-text">¡Has encontrado todos los ${findData.label}!</p>
-          </div>
-        </div>
-      </div>
-    `;
-
+    const gameContainer = container.querySelector('.game-container');
+    if (gameContainer) {
+      gameContainer.style.position = 'relative';
+      const overlay = document.createElement('div');
+      overlay.className = 'activity-win-banner-overlay anim-fade-in';
+      overlay.innerHTML = `
+        <img src="/assets/juegos/juegos elementos pag/bien hecho (1).png" alt="Bien Hecho" class="win-banner-img" />
+      `;
+      gameContainer.appendChild(overlay);
+    }
     launchConfetti();
-    document.getElementById('exit-win-btn')?.addEventListener('click', goBack);
   }
 
   function launchConfetti() {
+    const titleContainer = container.querySelector('.game-title-container');
+    if (titleContainer) titleContainer.style.position = 'relative';
+    const targetEl = titleContainer || document.body;
+
     const colors = ['#F26671', '#F2BB4B', '#F28157', '#748A63', '#547398'];
     for (let i = 0; i < 50; i++) {
       const particle = document.createElement('div');
       particle.className = 'confetti-particle';
-      particle.style.left = Math.random() * 100 + 'vw';
+      particle.style.left = (Math.random() * 80 + 10) + '%';
+      particle.style.top = (Math.random() * 100) + '%';
       particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      particle.style.animationDelay = Math.random() * 2 + 's';
-      particle.style.transform = `scale(${Math.random() * 0.6 + 0.6})`;
-      document.body.appendChild(particle);
+      particle.style.animationDelay = Math.random() * 1.5 + 's';
+      targetEl.appendChild(particle);
       setTimeout(() => { particle.remove(); }, 5000);
     }
   }

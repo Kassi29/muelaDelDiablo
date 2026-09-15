@@ -25,26 +25,43 @@ export function renderStoryReader(container, storyIdFromRoute) {
 
   // Estado local del lector
   let viewMode = 'cover'; // 'cover' | 'book'
-  let currentPage = 1;    // 1..story.pageCount
+  let currentSpread = 1;
+  const totalSpreads = Math.ceil((story.pageCount + 1) / 2);
   let isFlipping = false; // Evita múltiples clics durante la animación
 
   // Rutas de recursos
   const folderPath = `/assets/cuentos/${encodeURI(story.folder)}`;
   const bookBaseImgSrc = story.openBookImage || `${folderPath}/libro abierto.png`;
 
+  function getLeftPageNum(spread) {
+    if (spread === 1) return null; // Primer spread tiene plana izquierda en blanco
+    const pageNum = (spread - 1) * 2;
+    return pageNum <= story.pageCount ? pageNum : null;
+  }
+
+  function getRightPageNum(spread) {
+    const pageNum = spread === 1 ? 1 : (spread - 1) * 2 + 1;
+    return pageNum <= story.pageCount ? pageNum : null;
+  }
+
   function getPageImgSrc(pageNum) {
-    return `${folderPath}/pagina-${pageNum}.webp`;
+    if (!pageNum) return '';
+    return `${folderPath}/${pageNum}.png`;
   }
 
   // Precargar imágenes de páginas adyacentes
-  function preloadImages(pageNum) {
-    if (pageNum < story.pageCount) {
-      const nextImg = new Image();
-      nextImg.src = getPageImgSrc(pageNum + 1);
+  function preloadImages(spread) {
+    if (spread < totalSpreads) {
+      const nextLeft = getLeftPageNum(spread + 1);
+      const nextRight = getRightPageNum(spread + 1);
+      if (nextLeft) { const img = new Image(); img.src = getPageImgSrc(nextLeft); }
+      if (nextRight) { const img = new Image(); img.src = getPageImgSrc(nextRight); }
     }
-    if (pageNum > 1) {
-      const prevImg = new Image();
-      prevImg.src = getPageImgSrc(pageNum - 1);
+    if (spread > 1) {
+      const prevLeft = getLeftPageNum(spread - 1);
+      const prevRight = getRightPageNum(spread - 1);
+      if (prevLeft) { const img = new Image(); img.src = getPageImgSrc(prevLeft); }
+      if (prevRight) { const img = new Image(); img.src = getPageImgSrc(prevRight); }
     }
   }
 
@@ -97,8 +114,8 @@ export function renderStoryReader(container, storyIdFromRoute) {
 
     wrapper.querySelector('#btn-start-reading').addEventListener('click', () => {
       viewMode = 'book';
-      currentPage = 1;
-      preloadImages(currentPage);
+      currentSpread = 1;
+      preloadImages(currentSpread);
       render();
     });
   }
@@ -122,7 +139,7 @@ export function renderStoryReader(container, storyIdFromRoute) {
         <div class="book-stage">
           
           <!-- Flecha Izquierda -->
-          <button class="wood-arrow wood-arrow-prev" id="btn-prev-page" ${currentPage === 1 ? 'disabled' : ''} aria-label="Página anterior">
+          <button class="wood-arrow wood-arrow-prev" id="btn-prev-page" ${currentSpread === 1 ? 'disabled' : ''} aria-label="Página anterior">
             <img src="/assets/cuentos/Elementos p[agina cuentos/BOTÓN IZQ.png" alt="Página anterior" class="wood-arrow-img" />
           </button>
 
@@ -138,26 +155,26 @@ export function renderStoryReader(container, storyIdFromRoute) {
               <!-- Plana Izquierda -->
               <div class="page-half page-half-left" id="static-left-half">
                 <img id="static-left-img"
-                     src="${getPageImgSrc(currentPage)}" 
-                     alt="Página ${currentPage} izquierda" 
+                     src="${getPageImgSrc(getLeftPageNum(currentSpread))}" 
+                     alt="Página izquierda" 
                      class="page-img-left"
+                     style="${!getLeftPageNum(currentSpread) ? 'display: none;' : ''}"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                <div class="page-fallback" id="static-left-fallback" style="display: none;">
-                  <span class="fallback-badge">${story.title}</span>
-                  <div class="fallback-text">Plana Izquierda</div>
+                <div class="page-fallback" id="static-left-fallback" style="${getLeftPageNum(currentSpread) ? 'display: none;' : 'display: flex; background: transparent; border: none;'}">
+                  ${!getLeftPageNum(currentSpread) ? '' : `<span class="fallback-badge">${story.title}</span><div class="fallback-text">Plana Izquierda</div>`}
                 </div>
               </div>
 
               <!-- Plana Derecha -->
               <div class="page-half page-half-right" id="static-right-half">
                 <img id="static-right-img"
-                     src="${getPageImgSrc(currentPage)}" 
-                     alt="Página ${currentPage} derecha" 
+                     src="${getPageImgSrc(getRightPageNum(currentSpread))}" 
+                     alt="Página derecha" 
                      class="page-img-right"
+                     style="${!getRightPageNum(currentSpread) ? 'display: none;' : ''}"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                <div class="page-fallback" id="static-right-fallback" style="display: none;">
-                  <span class="fallback-badge">${story.title}</span>
-                  <div class="fallback-text">Plana Derecha</div>
+                <div class="page-fallback" id="static-right-fallback" style="${getRightPageNum(currentSpread) ? 'display: none;' : 'display: flex; background: transparent; border: none;'}">
+                  ${!getRightPageNum(currentSpread) ? '' : `<span class="fallback-badge">${story.title}</span><div class="fallback-text">Plana Derecha</div>`}
                 </div>
               </div>
 
@@ -166,7 +183,7 @@ export function renderStoryReader(container, storyIdFromRoute) {
           </div>
 
           <!-- Flecha Derecha -->
-          <button class="wood-arrow wood-arrow-next" id="btn-next-page" ${currentPage === story.pageCount ? 'disabled' : ''} aria-label="Página siguiente">
+          <button class="wood-arrow wood-arrow-next" id="btn-next-page" ${currentSpread === totalSpreads ? 'disabled' : ''} aria-label="Página siguiente">
             <img src="/assets/cuentos/Elementos p[agina cuentos/BOTÓN DER.png" alt="Página siguiente" class="wood-arrow-img" />
           </button>
 
@@ -184,27 +201,37 @@ export function renderStoryReader(container, storyIdFromRoute) {
     const btnNext = wrapper.querySelector('#btn-next-page');
 
     btnPrev.addEventListener('click', () => {
-      if (currentPage > 1 && !isFlipping) {
+      if (currentSpread > 1 && !isFlipping) {
         flipPage('backward');
       }
     });
 
     btnNext.addEventListener('click', () => {
-      if (currentPage < story.pageCount && !isFlipping) {
+      if (currentSpread < totalSpreads && !isFlipping) {
         flipPage('forward');
       }
     });
   }
 
   // Helper para actualizar contenido de una mitad estática sin parpadeo
-  function setHalfContent(side, pageNum) {
+  function setHalfContent(side, spread) {
     const imgEl = document.getElementById(`static-${side}-img`);
     const fallbackEl = document.getElementById(`static-${side}-fallback`);
+    const pageNum = side === 'left' ? getLeftPageNum(spread) : getRightPageNum(spread);
+    
     if (imgEl && fallbackEl) {
-      imgEl.src = getPageImgSrc(pageNum);
-      imgEl.alt = `Página ${pageNum} ${side === 'left' ? 'izquierda' : 'derecha'}`;
-      imgEl.style.display = '';
-      fallbackEl.style.display = 'none';
+      if (pageNum) {
+        imgEl.src = getPageImgSrc(pageNum);
+        imgEl.alt = `Página ${pageNum} ${side === 'left' ? 'izquierda' : 'derecha'}`;
+        imgEl.style.display = '';
+        fallbackEl.style.display = 'none';
+      } else {
+        imgEl.style.display = 'none';
+        fallbackEl.style.display = 'flex';
+        fallbackEl.style.background = 'transparent';
+        fallbackEl.style.border = 'none';
+        fallbackEl.innerHTML = '';
+      }
     }
   }
 
@@ -218,29 +245,24 @@ export function renderStoryReader(container, storyIdFromRoute) {
     const btnNext = document.getElementById('btn-next-page');
 
     if (!pagesArea) {
-      if (direction === 'forward') currentPage++;
-      else currentPage--;
+      if (direction === 'forward') currentSpread++;
+      else currentSpread--;
       isFlipping = false;
       render();
       return;
     }
 
-    const targetPage = direction === 'forward' ? currentPage + 1 : currentPage - 1;
-    const currentImgSrc = getPageImgSrc(currentPage);
-    const targetImgSrc = getPageImgSrc(targetPage);
+    const targetSpread = direction === 'forward' ? currentSpread + 1 : currentSpread - 1;
+    const currentLeftPage = getLeftPageNum(currentSpread);
+    const currentRightPage = getRightPageNum(currentSpread);
+    const targetLeftPage = getLeftPageNum(targetSpread);
+    const targetRightPage = getRightPageNum(targetSpread);
 
     // 1. Preparar las capas estáticas inferiores DEBAJO de la hoja que gira
     if (direction === 'forward') {
-      // Al avanzar (1 -> 2):
-      // - La mitad izquierda estática mantiene página 1 (cubierta luego por la hoja)
-      // - La mitad derecha estática cambia Inmediatamente a la página 2
-      //   (está tapada por el frente de la hoja que muestra página 1 derecha, así que el cambio es invisible)
-      setHalfContent('right', targetPage);
+      setHalfContent('right', targetSpread);
     } else {
-      // Al retroceder (2 -> 1):
-      // - La mitad derecha estática mantiene página 2
-      // - La mitad izquierda estática cambia Inmediatamente a la página 1
-      setHalfContent('left', targetPage);
+      setHalfContent('left', targetSpread);
     }
 
     // 2. Crear la hoja 3D que se voltea
@@ -251,38 +273,26 @@ export function renderStoryReader(container, storyIdFromRoute) {
       leaf.innerHTML = `
         <!-- Cara frontal (mitad derecha de página actual) -->
         <div class="leaf-face leaf-front page-half-right">
-          <img src="${currentImgSrc}" class="page-img-right" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-          <div class="page-fallback" style="display: none;">
-            <span class="fallback-badge">${story.title}</span>
-            <div class="fallback-text">Plana Derecha</div>
-          </div>
+          <img src="${getPageImgSrc(currentRightPage)}" class="page-img-right" style="${!currentRightPage ? 'display:none;' : ''}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="page-fallback" style="${currentRightPage ? 'display:none;' : 'display:flex; background:transparent; border:none;'}"></div>
         </div>
         <!-- Cara posterior (mitad izquierda de página siguiente) -->
         <div class="leaf-face leaf-back page-half-left">
-          <img src="${targetImgSrc}" class="page-img-left" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-          <div class="page-fallback" style="display: none;">
-            <span class="fallback-badge">${story.title}</span>
-            <div class="fallback-text">Plana Izquierda</div>
-          </div>
+          <img src="${getPageImgSrc(targetLeftPage)}" class="page-img-left" style="${!targetLeftPage ? 'display:none;' : ''}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="page-fallback" style="${targetLeftPage ? 'display:none;' : 'display:flex; background:transparent; border:none;'}"></div>
         </div>
       `;
     } else {
       leaf.innerHTML = `
         <!-- Cara frontal (mitad izquierda de página actual) -->
         <div class="leaf-face leaf-front page-half-left">
-          <img src="${currentImgSrc}" class="page-img-left" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-          <div class="page-fallback" style="display: none;">
-            <span class="fallback-badge">${story.title}</span>
-            <div class="fallback-text">Plana Izquierda</div>
-          </div>
+          <img src="${getPageImgSrc(currentLeftPage)}" class="page-img-left" style="${!currentLeftPage ? 'display:none;' : ''}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="page-fallback" style="${currentLeftPage ? 'display:none;' : 'display:flex; background:transparent; border:none;'}"></div>
         </div>
         <!-- Cara posterior (mitad derecha de página anterior) -->
         <div class="leaf-face leaf-back page-half-right">
-          <img src="${targetImgSrc}" class="page-img-right" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-          <div class="page-fallback" style="display: none;">
-            <span class="fallback-badge">${story.title}</span>
-            <div class="fallback-text">Plana Derecha</div>
-          </div>
+          <img src="${getPageImgSrc(targetRightPage)}" class="page-img-right" style="${!targetRightPage ? 'display:none;' : ''}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="page-fallback" style="${targetRightPage ? 'display:none;' : 'display:flex; background:transparent; border:none;'}"></div>
         </div>
       `;
     }
@@ -291,23 +301,23 @@ export function renderStoryReader(container, storyIdFromRoute) {
 
     // 3. Al completar la animación (~580ms):
     setTimeout(() => {
-      currentPage = targetPage;
+      currentSpread = targetSpread;
 
       // Actualizar la otra mitad estática para que coincida con la nueva página
       if (direction === 'forward') {
-        setHalfContent('left', currentPage);
+        setHalfContent('left', currentSpread);
       } else {
-        setHalfContent('right', currentPage);
+        setHalfContent('right', currentSpread);
       }
 
       // Remover la hoja que se volteó
       leaf.remove();
 
       // Actualizar estado de las flechas
-      if (btnPrev) btnPrev.disabled = (currentPage === 1);
-      if (btnNext) btnNext.disabled = (currentPage === story.pageCount);
+      if (btnPrev) btnPrev.disabled = (currentSpread === 1);
+      if (btnNext) btnNext.disabled = (currentSpread === totalSpreads);
 
-      preloadImages(currentPage);
+      preloadImages(currentSpread);
       isFlipping = false;
     }, 580);
   }

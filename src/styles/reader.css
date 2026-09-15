@@ -46,7 +46,7 @@
 }
 
 .btn-back-arrow-img {
-  width: 44px;
+  width: 49px;
   height: auto;
   display: block;
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
@@ -56,7 +56,7 @@
 .btn-back-text {
   font-family: var(--font-chat);
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #5A3520;
   letter-spacing: 0.3px;
 }
@@ -95,7 +95,6 @@
   width: 100%;
   height: auto;
   display: block;
-  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.25));
 }
 
 .story-reader-cover-box .story-cover-container {
@@ -170,7 +169,7 @@
   width: 100%;
   max-width: 1944px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -186,9 +185,9 @@
 
 /* Flechas de Madera Rústicas (Imágenes PNG) */
 .wood-arrow {
-  width: clamp(72px, 7vw, 120px);
-  height: clamp(72px, 7vw, 120px);
-  min-width: clamp(72px, 7vw, 120px);
+  width: clamp(65px, 6.3vw, 108px);
+  height: clamp(65px, 6.3vw, 108px);
+  min-width: clamp(65px, 6.3vw, 108px);
   background: transparent;
   border: none;
   padding: 0;
@@ -229,12 +228,12 @@
   filter: grayscale(0.7);
 }
 
-/* Marco del Libro (+20% -> max-width 1944px) */
+/* Marco del Libro (-25% más pequeño -> width: 75%, max-width 1458px) */
 .book-frame {
   position: relative;
-  width: 100%;
-  max-width: 1944px;
-  aspect-ratio: 2 / 1;
+  width: 75%;
+  max-width: 1458px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -245,8 +244,7 @@
 /* La imagen de base: libro abierto.png (NUNCA SE MUEVE, marco exterior visible) */
 .book-base-img {
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: auto;
   display: block;
   pointer-events: none;
   filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.35));
@@ -288,16 +286,9 @@
   position: absolute;
   top: 0;
   height: 100%;
-  width: 200%;
-  object-fit: cover;
-}
-
-.page-img-left {
+  width: 100%;
+  object-fit: fill;
   left: 0;
-}
-
-.page-img-right {
-  left: -100%;
 }
 
 /* Fallback visual cuando no existe la imagen real del cuento */
