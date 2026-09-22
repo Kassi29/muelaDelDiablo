@@ -27,7 +27,13 @@ export function renderStoryReader(container, storyIdFromRoute) {
   let viewMode = 'cover'; // 'cover' | 'book'
   let currentSpread = 1;
   const totalSpreads = Math.ceil((story.pageCount + 1) / 2);
+  let currentPageMobile = 1; // Página actual en modo móvil (1 plana a la vez)
+  const totalPagesMobile = story.pageCount;
   let isFlipping = false; // Evita múltiples clics durante la animación
+
+  function isMobileView() {
+    return window.innerWidth <= 768;
+  }
 
   // Rutas de recursos
   const folderPath = `/assets/cuentos/${encodeURI(story.folder)}`;
@@ -50,16 +56,26 @@ export function renderStoryReader(container, storyIdFromRoute) {
   }
 
   // Precargar imágenes de páginas adyacentes
-  function preloadImages(spread) {
-    if (spread < totalSpreads) {
-      const nextLeft = getLeftPageNum(spread + 1);
-      const nextRight = getRightPageNum(spread + 1);
+  function preloadImages() {
+    if (isMobileView()) {
+      if (currentPageMobile < totalPagesMobile) {
+        const img = new Image(); img.src = getPageImgSrc(currentPageMobile + 1);
+      }
+      if (currentPageMobile > 1) {
+        const img = new Image(); img.src = getPageImgSrc(currentPageMobile - 1);
+      }
+      return;
+    }
+
+    if (currentSpread < totalSpreads) {
+      const nextLeft = getLeftPageNum(currentSpread + 1);
+      const nextRight = getRightPageNum(currentSpread + 1);
       if (nextLeft) { const img = new Image(); img.src = getPageImgSrc(nextLeft); }
       if (nextRight) { const img = new Image(); img.src = getPageImgSrc(nextRight); }
     }
-    if (spread > 1) {
-      const prevLeft = getLeftPageNum(spread - 1);
-      const prevRight = getRightPageNum(spread - 1);
+    if (currentSpread > 1) {
+      const prevLeft = getLeftPageNum(currentSpread - 1);
+      const prevRight = getRightPageNum(currentSpread - 1);
       if (prevLeft) { const img = new Image(); img.src = getPageImgSrc(prevLeft); }
       if (prevRight) { const img = new Image(); img.src = getPageImgSrc(prevRight); }
     }
@@ -124,10 +140,125 @@ export function renderStoryReader(container, storyIdFromRoute) {
   // 2. Renderizar Vista de Libro Abierto
   // ---------------------------------------------------------------------------
   function renderBookView(wrapper) {
+    const isMobile = isMobileView();
+
+    if (isMobile) {
+      // Vista móvil: 1 plana a la vez, grande, centrada, con soporte swipe y flechas
+      wrapper.innerHTML = `
+        <div class="book-pages-view mobile-reader-view">
+          
+          <!-- Barra Superior: Botón Volver al Mapa + Indicador de página -->
+          <div class="reader-top-bar mobile-top-bar">
+            <button class="btn-back-wood" id="btn-back-home-book">
+              <img src="/assets/boton retroceder.png" alt="" class="btn-back-arrow-img" />
+              <span class="btn-back-text">Mapa</span>
+            </button>
+            <span class="mobile-page-counter" id="mobile-page-counter">
+              Página ${currentPageMobile} de ${totalPagesMobile}
+            </span>
+          </div>
+
+          <!-- Contenedor táctil de la plana individual -->
+          <div class="mobile-single-page-stage" id="mobile-page-stage">
+            <div class="mobile-single-page-card" id="mobile-page-card">
+              <img id="mobile-current-page-img"
+                   src="${getPageImgSrc(currentPageMobile)}"
+                   alt="Página ${currentPageMobile}"
+                   class="mobile-page-img" />
+            </div>
+
+            <!-- Flechas de navegación táctil superpuestas o a los costados -->
+            <button class="wood-arrow wood-arrow-prev mobile-arrow" id="btn-prev-page" ${currentPageMobile === 1 ? 'disabled' : ''} aria-label="Página anterior">
+              <img src="/assets/cuentos/Elementos p[agina cuentos/BOTÓN IZQ.png" alt="Anterior" class="wood-arrow-img" />
+            </button>
+            <button class="wood-arrow wood-arrow-next mobile-arrow" id="btn-next-page" ${currentPageMobile === totalPagesMobile ? 'disabled' : ''} aria-label="Página siguiente">
+              <img src="/assets/cuentos/Elementos p[agina cuentos/BOTÓN DER.png" alt="Siguiente" class="wood-arrow-img" />
+            </button>
+          </div>
+
+          <div class="mobile-swipe-hint">
+            <span>👈 Desliza para cambiar de página 👉</span>
+          </div>
+
+        </div>
+      `;
+
+      wrapper.querySelector('#btn-back-home-book').addEventListener('click', () => {
+        navigateTo('/');
+      });
+
+      const btnPrev = wrapper.querySelector('#btn-prev-page');
+      const btnNext = wrapper.querySelector('#btn-next-page');
+
+      function changeMobilePage(delta) {
+        const targetPage = currentPageMobile + delta;
+        if (targetPage < 1 || targetPage > totalPagesMobile) return;
+
+        currentPageMobile = targetPage;
+        const pageImg = wrapper.querySelector('#mobile-current-page-img');
+        const counter = wrapper.querySelector('#mobile-page-counter');
+        const pageCard = wrapper.querySelector('#mobile-page-card');
+
+        if (pageCard) {
+          pageCard.classList.remove('page-change-anim');
+          void pageCard.offsetWidth;
+          pageCard.classList.add('page-change-anim');
+        }
+
+        if (pageImg) {
+          pageImg.src = getPageImgSrc(currentPageMobile);
+          pageImg.alt = `Página ${currentPageMobile}`;
+        }
+        if (counter) {
+          counter.textContent = `Página ${currentPageMobile} de ${totalPagesMobile}`;
+        }
+        if (btnPrev) btnPrev.disabled = (currentPageMobile === 1);
+        if (btnNext) btnNext.disabled = (currentPageMobile === totalPagesMobile);
+
+        preloadImages();
+      }
+
+      btnPrev.addEventListener('click', () => changeMobilePage(-1));
+      btnNext.addEventListener('click', () => changeMobilePage(1));
+
+      // Soporte gestual táctil Swipe
+      const stageEl = wrapper.querySelector('#mobile-page-stage');
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      if (stageEl) {
+        stageEl.addEventListener('touchstart', e => {
+          touchStartX = e.changedTouches[0].screenX;
+          touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        stageEl.addEventListener('touchend', e => {
+          const touchEndX = e.changedTouches[0].screenX;
+          const touchEndY = e.changedTouches[0].screenY;
+          const diffX = touchEndX - touchStartX;
+          const diffY = touchEndY - touchStartY;
+
+          // Si el movimiento horizontal es mayor que vertical y supera el umbral (45px)
+          if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 45) {
+            if (diffX > 0) {
+              // Swipe a la derecha -> página anterior
+              changeMobilePage(-1);
+            } else {
+              // Swipe a la izquierda -> página siguiente
+              changeMobilePage(1);
+            }
+          }
+        }, { passive: true });
+      }
+
+      return;
+    }
+
+    // Vista de escritorio: libro abierto con animación 3D de dos hojas
     wrapper.innerHTML = `
       <div class="book-pages-view">
         
-        <!-- Barra Superior: Solo botón Volver al Mapa (Sin numeración ni botón de actividad arriba) -->
+        <!-- Barra Superior: Solo botón Volver al Mapa -->
         <div class="reader-top-bar">
           <button class="btn-back-wood" id="btn-back-home-book">
             <img src="/assets/boton retroceder.png" alt="" class="btn-back-arrow-img" />

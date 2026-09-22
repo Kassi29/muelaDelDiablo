@@ -38,13 +38,13 @@
 }
 
 .chat-bg-antes {
-  background-image: url('/assets/chats/chats antes.png');
+  background-image: url("/assets/chats/chats antes.png");
   opacity: 1;
   z-index: 1;
 }
 
 .chat-bg-dentro {
-  background-image: url('/assets/chats/chats dentro.png');
+  background-image: url("/assets/chats/chats dentro.png");
   opacity: 0;
   z-index: 2;
 }
@@ -90,15 +90,15 @@
 
 .chat-slot-btn {
   position: absolute;
-  left: 9.3%;
-  width: 32%;
+  left: 10.5%;
+  width: 32.5%;
   background: transparent;
   border: none;
-  padding: 0 10px 0 24px;
+  padding: 0 16px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   pointer-events: auto;
   outline: none;
   border-radius: 0;
@@ -156,7 +156,7 @@
 
 /* Nombre del personaje con fuente RUBIK exacto y color #815336 (+3% en tamaño) */
 .chat-slot-name {
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
   font-weight: 700;
   color: #815336;
   font-size: clamp(0.72rem, 1.5vw, 1.39rem);
@@ -167,6 +167,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   flex: 1;
+}
+
+.chat-mobile-back-btn {
+  display: none !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -181,10 +185,10 @@
   z-index: 6;
 }
 
-/* Header del personaje: subido 50px */
+/* Header del personaje: bajado 20px */
 .chat-right-header {
   position: absolute;
-  top: calc(19.2% - 41px);
+  top: calc(22.2% - 71px);
   left: 47.2%;
   width: 63%;
   height: 11.5%;
@@ -222,7 +226,7 @@
 }
 
 .chat-header-name {
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
   font-weight: 700;
   color: #815336;
   font-size: clamp(0.8rem, 1.7vw, 1.55rem);
@@ -231,11 +235,11 @@
   text-transform: uppercase;
 }
 
-/* Área de Mensajes */
+/* Área de Mensajes: subida 50px */
 .chat-messages-area {
   position: absolute;
-  top: 31.5%;
-  bottom: 18.5%;
+  top: calc(31.5% - 14px);
+  bottom: calc(18.5% + 50px);
   left: 44.8%;
   width: 44.5%;
   overflow-y: auto;
@@ -263,22 +267,22 @@
 .chat-msg-bubble {
   max-width: 82%;
   padding: 8px 14px;
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
   font-size: clamp(0.75rem, 1.3vw, 1.15rem);
   line-height: 1.35;
   word-break: break-word;
 }
 
 .chat-msg-character .chat-msg-bubble {
-  background: #6B4226;
-  color: #F5E6D0;
+  background: #6b4226;
+  color: #f5e6d0;
   border-radius: 16px 16px 16px 4px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
 }
 
 .chat-msg-user .chat-msg-bubble {
-  background: #D98A3B;
-  color: #3D2210;
+  background: #d98a3b;
+  color: #3d2210;
   border-radius: 16px 16px 4px 16px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
@@ -295,23 +299,22 @@
   opacity: 0.7;
 }
 
-/* Indicador escribiendo */
+/* Indicador escribiendo: subido 50px */
 .chat-typing {
   position: absolute;
-  bottom: 17%;
+  bottom: calc(17% + 50px);
   left: 45%;
   display: flex;
   gap: 4px;
   align-items: center;
   padding: 6px 10px;
-  background: #6B4226;
+  background: #6b4226;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   pointer-events: none;
 }
 
 @keyframes typingDotBounce {
-
   0%,
   100% {
     transform: translateY(0);
@@ -325,7 +328,7 @@
 .chat-typing-dot {
   width: 6px;
   height: 6px;
-  background: #F5E6D0;
+  background: #f5e6d0;
   border-radius: 50%;
   animation: typingDotBounce 0.6s infinite ease-in-out;
 }
@@ -338,11 +341,10 @@
   animation-delay: 0.3s;
 }
 
-/* Input inferior superpuesto */
+/* Input inferior superpuesto: subido 50px adicionales (+65px en total) */
 .chat-input-form {
   position: absolute;
-  bottom: calc(5.2% + 15px);
-  /* Subido 15px */
+  bottom: calc(5.2% + 18px);
   left: 46%;
   width: 46.5%;
   height: 10.5%;
@@ -355,9 +357,9 @@
   flex: 1;
   background: transparent;
   border: none;
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
   font-weight: 700;
-  color: #4A2A12;
+  color: #4a2a12;
   text-transform: uppercase;
   font-size: clamp(0.75rem, 1.5vw, 1.25rem);
   outline: none;
@@ -365,7 +367,7 @@
 }
 
 .chat-input-element::placeholder {
-  color: #8B5830;
+  color: #8b5830;
   font-weight: 700;
   opacity: 0.8;
 }
@@ -377,4 +379,188 @@
   border: none;
   cursor: pointer;
   outline: none;
+}
+
+/* ==========================================================================
+   ADAPTACIÓN CHAT VERTICAL (MÓVIL / PANTALLAS < 768px)
+   Usa exactamente CHATS vertical.png y CHATS vertical 2.png
+   ========================================================================== */
+@media (max-width: 768px) {
+  .chat-page-wrapper {
+    padding: 8px 8px 30px 8px;
+  }
+
+  .chat-canvas {
+    max-width: 500px;
+    width: 96%;
+    aspect-ratio: 1365 / 2048;
+    border-radius: 20px;
+  }
+
+  /* Capas de fondo en formato vertical */
+  .chat-bg-antes {
+    background-image: url("/assets/chats/chats%20verticales/CHATS%20vertical.png");
+  }
+
+  .chat-bg-dentro {
+    background-image: url("/assets/chats/chats%20verticales/CHATS%20vertical%202.png");
+  }
+
+  /* Botón interactivo sobre el título CHATS o EN LÍNEA para deseleccionar y volver */
+  .chat-back-title-btn {
+    top: 5.5%;
+    left: 18%;
+    width: 64%;
+    height: 12%;
+    border-radius: 16px;
+    z-index: 15;
+  }
+
+  /* ------------------------------------------------------------------------
+     LISTA DE CONTACTOS VERTICAL (CHATS vertical.png)
+     5 ranuras distribuidas verticalmente sobre los 5 renglones
+     ------------------------------------------------------------------------ */
+  .chat-canvas.is-active .chat-left-slots {
+    display: none;
+    pointer-events: none;
+  }
+
+  .chat-slot-btn {
+    left: 22.5% !important;
+    width: 67.5% !important;
+    padding: 0 16px;
+    gap: 14px;
+  }
+
+  .chat-slot-avatar {
+    height: 64%;
+    border-width: 2px;
+  }
+
+  .chat-slot-name {
+    font-size: clamp(0.95rem, 4.2vw, 1.4rem);
+  }
+
+  /* Posiciones de cada uno de los 5 contactos en vertical */
+  .chat-slot-btn:nth-child(1) {
+    top: 22.8% !important;
+    height: 11.6% !important;
+  }
+  .chat-slot-btn:nth-child(2) {
+    top: 35.8% !important;
+    height: 11.6% !important;
+  }
+  .chat-slot-btn:nth-child(3) {
+    top: 48.8% !important;
+    height: 11.6% !important;
+  }
+  .chat-slot-btn:nth-child(4) {
+    top: 61.8% !important;
+    height: 11.6% !important;
+  }
+  .chat-slot-btn:nth-child(5) {
+    top: 74.8% !important;
+    height: 11.6% !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     PANEL CHAT ACTIVO VERTICAL (CHATS vertical 2.png)
+     ------------------------------------------------------------------------ */
+  .chat-canvas:not(.is-active) .chat-right-panel {
+    display: none !important;
+  }
+
+  .chat-canvas.is-active .chat-right-panel {
+    display: block !important;
+  }
+
+  .chat-canvas.is-active .chat-mobile-back-btn {
+    display: flex !important;
+  }
+
+  /* Encabezado del personaje seleccionado bajo "EN LÍNEA": bajado 20px */
+  .chat-right-header {
+    top: calc(13.5% - 30px);
+    left: 17%;
+    width: 68%;
+    height: 7.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .chat-header-avatar {
+    width: auto;
+    height: 85%;
+    border-width: 2px;
+  }
+
+  .chat-header-name {
+    font-size: clamp(0.9rem, 3.8vw, 1.3rem);
+  }
+
+  /* Botón de retroceso táctil explícito en móvil para volver a contactos: subido */
+  .chat-mobile-back-btn {
+    position: absolute;
+    top: calc(5.5% - 20px);
+    left: 8%;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    outline: none;
+  }
+
+  .chat-mobile-back-btn img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  }
+
+  /* Área de mensajes en el cuerpo central del pergamino vertical: subida 50px */
+  .chat-messages-area {
+    top: calc(22.5% - 50px);
+    bottom: calc(17% + 50px);
+    left: 17%;
+    width: 69%;
+    padding: 10px 8px;
+    gap: 8px;
+  }
+
+  .chat-msg-bubble {
+    max-width: 86%;
+    font-size: clamp(0.78rem, 3.2vw, 1rem);
+    padding: 7px 12px;
+  }
+
+  /* Indicador escribiendo: subido 50px */
+  .chat-typing {
+    bottom: calc(15.5% + 50px);
+    left: 20%;
+    padding: 4px 8px;
+  }
+
+  /* Formulario de entrada en la parte inferior de CHATS vertical 2.png: subido 50px */
+  .chat-input-form {
+    bottom: calc(5.6% + 50px);
+    left: 16%;
+    width: 71%;
+    height: 9%;
+  }
+
+  .chat-input-element {
+    font-size: clamp(0.78rem, 3.2vw, 1.05rem);
+    padding: 0 8px;
+  }
+
+  .chat-send-trigger {
+    width: 18%;
+  }
 }

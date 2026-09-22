@@ -102,13 +102,24 @@
 }
 
 @media (max-width: 680px) {
+  .stories-page-container {
+    padding: 12px 12px 40px 12px;
+    gap: 20px;
+  }
+
   .stories-grid {
     grid-template-columns: 1fr;
-    max-width: 330px;
+    max-width: 92vw;
+    gap: 28px;
+  }
+
+  .story-pergamino-container,
+  .story-cover-container {
+    max-width: 320px;
   }
 
   .stories-header-papiro {
-    max-width: 90%;
+    max-width: 92%;
   }
 }
 

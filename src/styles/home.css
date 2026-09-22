@@ -389,6 +389,21 @@
    RESPONSIVE DESIGN
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
+  .home-header {
+    padding: 16px 10px 0 10px;
+  }
+
+  .home-navbar {
+    padding: 0 10px;
+  }
+
+  .home-section-cuentos,
+  .home-section-juegos,
+  .home-section-chats {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
   .mapa-icon {
     width: 30%;
   }
@@ -412,7 +427,13 @@
 
 @media (max-width: 480px) {
   .home-header {
-    padding-top: 12px;
+    padding-top: 10px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .home-navbar {
+    padding: 0 6px;
   }
 
   .mapa-icon {

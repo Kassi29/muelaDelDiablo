@@ -88,6 +88,11 @@ export function renderChat(container) {
 
         <!-- Overlays del panel derecho (inicialmente ocultos) -->
         <div class="chat-right-panel" id="chat-right-panel" style="display: none;">
+          <!-- Botón de retorno táctil móvil -->
+          <button class="chat-mobile-back-btn" id="chat-mobile-back-btn" aria-label="Volver a lista de chats" title="Volver a lista de chats">
+            <img src="/assets/boton retroceder.png" alt="Volver" />
+          </button>
+
           <!-- Header personaje activo (sin 'EN LÍNEA' duplicado) -->
           <div class="chat-right-header">
             <div class="chat-header-avatar" id="chat-header-avatar"></div>
@@ -132,6 +137,7 @@ export function renderChat(container) {
   const inputEl = container.querySelector('#message-input');
   const slotButtons = container.querySelectorAll('.chat-slot-btn');
   const backBtn = container.querySelector('#chat-back-btn');
+  const mobileBackBtn = container.querySelector('#chat-mobile-back-btn');
 
   function selectCharacter(id) {
     if (selectedCharacterId === id) return;
@@ -214,11 +220,19 @@ export function renderChat(container) {
       typingIndicator.style.display = 'flex';
     }
 
+    const history = (chatHistories[currentChatId] || [])
+      .slice(0, -1)
+      .slice(-6)
+      .map(m => ({
+        role: m.sender === 'user' ? 'user' : 'model',
+        parts: [{ text: m.text }]
+      }));
+
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, characterId: currentChatId })
+        body: JSON.stringify({ message: text, characterId: currentChatId, history })
       });
 
       const data = await response.json();
@@ -255,6 +269,11 @@ export function renderChat(container) {
   // Event listener para el botón del título "CHATS" (volver / deseleccionar)
   if (backBtn) {
     backBtn.addEventListener('click', deselectCharacter);
+  }
+
+  // Event listener para el botón de volver móvil
+  if (mobileBackBtn) {
+    mobileBackBtn.addEventListener('click', deselectCharacter);
   }
 
   // Event listener para el envío de mensajes

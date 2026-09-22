@@ -80,6 +80,13 @@ body {
   background-color: #8FD5EC;
 }
 
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+    background-attachment: scroll;
+  }
+}
+
 /* Cursor normal para toda la página, incluyendo botones (sobrescribe hover) */
 * {
   cursor: url('/assets/mouse/CURSOR%20NORMAL.svg') 0 0, auto !important;
