@@ -35,6 +35,19 @@
   --font-title: 'Fredoka', 'Nunito', sans-serif;
   --font-body: 'Nunito', sans-serif;
   --font-ui: 'Rubik', 'Nunito', sans-serif;
+  --font-story: Georgia, 'Times New Roman', serif;
+
+  /* Libro de cuentos */
+  --book-cover: #287AA3;
+  --book-cover-edge: #174F72;
+  --book-gold: #E6A839;
+  --book-gold-dark: #A3691F;
+  --book-page: #FFFAF0;
+  --book-page-edge: #E7D5AF;
+  --book-sky: #A7D9E8;
+  --book-grass: #8FAE70;
+  --book-night: #687794;
+  --book-page-number: #B79B72;
 
   /* Movimiento */
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
