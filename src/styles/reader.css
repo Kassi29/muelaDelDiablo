@@ -1,163 +1,58 @@
-/* ==========================================================================
-   STORY READER STYLE - RUSTIC BOOK & 3D PAGE TURN
-   ========================================================================== */
-
-.reader-container {
+/* Lector de cuentos: portada, libro abierto con hoja 3D (escritorio) y una página a la vez (móvil). */
+.reader {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 98%;
-  max-width: 2200px;
-  margin: 0 auto;
+  width: 100%;
   min-height: 75vh;
-  padding: 10px 16px 40px 16px;
-  box-sizing: border-box;
+  padding: 10px 16px 40px;
 }
 
-/* --- Vista de Portada del Cuento --- */
-.cover-view {
+.reader-top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --- Portada --- */
+.reader-cover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
-  width: 100%;
-  max-width: 850px;
-  margin: 10px auto;
-  text-align: center;
-}
-
-.cover-header-nav {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.btn-back-wood {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px 6px 4px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
-  text-decoration: none;
-  outline: none;
-}
-
-.btn-back-arrow-img {
-  width: 49px;
-  height: auto;
-  display: block;
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
-  transition: filter 0.2s ease;
-}
-
-.btn-back-text {
-  font-family: var(--font-chat);
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: #5A3520;
-  letter-spacing: 0.3px;
-}
-
-.btn-back-wood:hover {
-  transform: translateX(-4px) scale(1.04);
-}
-
-.btn-back-wood:hover .btn-back-arrow-img {
-  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.35)) brightness(1.1);
-}
-
-.btn-back-wood:active {
-  transform: translateX(2px) scale(0.97);
-}
-
-/* Portada con Pergamino superior y Portada Oficial SVG (+20%) */
-.story-reader-cover-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 864px;
   gap: 18px;
-  box-sizing: border-box;
-}
-
-.story-reader-cover-box .story-pergamino-container {
   width: 100%;
   max-width: 864px;
-  display: flex;
-  justify-content: center;
+  margin: 10px auto;
 }
 
-.story-reader-cover-box .story-pergamino-img {
+.reader-pergamino {
   width: 100%;
-  height: auto;
-  display: block;
 }
 
-.story-reader-cover-box .story-cover-container {
+.reader-cover-img {
   width: 100%;
   max-width: 780px;
   border-radius: 28px;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-.story-reader-cover-box .story-cover-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 28px;
-}
-
-
-.btn-start-wood {
-  background: transparent;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  outline: none;
-  box-shadow: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.reader-start {
   margin-top: -50px;
-  transition: none;
-}
-
-.btn-start-img {
   width: 100%;
   max-width: 490px;
-  height: auto;
-  display: block;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  transition: none;
+  transition: transform 0.2s var(--ease-bounce);
 }
 
-.btn-start-wood:hover,
-.btn-start-wood:active,
-.btn-start-wood:focus {
-  transform: none;
-  filter: none;
-  outline: none;
-  border: none;
-  box-shadow: none;
+.reader-start:hover {
+  transform: scale(1.03);
 }
 
-.btn-start-wood:hover .btn-start-img {
-  filter: none;
-  transform: none;
+.reader-missing {
+  color: var(--color-primary);
 }
 
-
-/* --- Vista del Libro Abierto --- */
-.book-pages-view {
+/* --- Libro de escritorio --- */
+.book-desktop {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -165,163 +60,96 @@
   gap: 20px;
 }
 
-.reader-top-bar {
-  width: 100%;
-  max-width: 1944px;
-  display: flex;
+.book-desktop .reader-top-bar {
   justify-content: center;
-  align-items: center;
 }
 
-/* Escenario del Libro y Flechas */
 .book-stage {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: clamp(16px, 2.5vw, 36px);
   width: 100%;
-  position: relative;
 }
 
-/* Flechas de Madera Rústicas (Imágenes PNG) */
-.wood-arrow {
+.page-arrow {
   width: clamp(65px, 6.3vw, 108px);
-  height: clamp(65px, 6.3vw, 108px);
-  min-width: clamp(65px, 6.3vw, 108px);
-  background: transparent;
-  border: none;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease, opacity 0.2s ease;
-  user-select: none;
+  flex-shrink: 0;
   z-index: 20;
-  outline: none;
+  transition: transform 0.2s var(--ease-bounce), opacity 0.2s ease;
 }
 
-.wood-arrow-img {
+.page-arrow img {
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
-  transition: filter 0.2s ease;
 }
 
-.wood-arrow:hover:not(:disabled) {
+.page-arrow:hover:not(:disabled) {
   transform: translateY(-3px) scale(1.1);
 }
 
-.wood-arrow:hover:not(:disabled) .wood-arrow-img {
-  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45)) brightness(1.1);
-}
-
-.wood-arrow:active:not(:disabled) {
+.page-arrow:active:not(:disabled) {
   transform: translateY(2px) scale(0.94);
 }
 
-.wood-arrow:disabled {
+.page-arrow:disabled {
   opacity: 0.35;
-  cursor: not-allowed;
   filter: grayscale(0.7);
+  cursor: not-allowed;
 }
 
-/* Marco del Libro (-25% más pequeño -> width: 75%, max-width 1458px) */
 .book-frame {
   position: relative;
   width: 75%;
   max-width: 1458px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   user-select: none;
   perspective: 2000px;
 }
 
-/* La imagen de base: libro abierto.png (NUNCA SE MUEVE, marco exterior visible) */
-.book-base-img {
+.book-base {
   width: 100%;
-  height: auto;
-  display: block;
   pointer-events: none;
   filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.35));
 }
 
-/* Área de las Páginas: libro abierto es más grande que las hojas animadas */
-.book-pages-area {
+/* Hojas de papel sobre el dibujo del libro abierto. */
+.book-pages {
   position: absolute;
-  top: 5.5%;
-  bottom: 5.5%;
-  left: 4.2%;
-  right: 4.2%;
+  inset: 5.5% 4.2%;
   display: flex;
   overflow: hidden;
   border-radius: 8px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* Capas estáticas de izquierda y derecha */
-.page-half {
+.page-half,
+.leaf-face {
   width: 50%;
   height: 100%;
-  position: relative;
   overflow: hidden;
-  background-color: #FAFAF7;
+  background: var(--paper-page);
 }
 
-.page-half-left {
-  border-right: 1px solid rgba(0, 0, 0, 0.08);
-}
+.page-half-left { border-right: 1px solid rgba(0, 0, 0, 0.08); }
+.page-half-right { border-left: 1px solid rgba(0, 0, 0, 0.08); }
 
-.page-half-right {
-  border-left: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-/* Imagen del Spread en cada mitad con clip */
-.page-img-left,
-.page-img-right {
-  position: absolute;
-  top: 0;
-  height: 100%;
+.page-img {
   width: 100%;
+  height: 100%;
   object-fit: fill;
-  left: 0;
 }
 
-/* Fallback visual cuando no existe la imagen real del cuento */
-.page-fallback {
+.page-blank {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  box-sizing: border-box;
-  text-align: center;
-  background: radial-gradient(circle at center, #FFFDF8 0%, #F5EDDC 100%);
-  border: 1px dashed rgba(139, 94, 60, 0.2);
 }
 
-.fallback-badge {
-  font-family: var(--font-title);
-  font-size: 1rem;
-  color: var(--color-text-light);
-  margin-bottom: 8px;
-  opacity: 0.8;
+/* La primera doble página no tiene plana izquierda: se ve el dibujo del libro. */
+.page-half:has(.page-blank) {
+  background: transparent;
+  border: none;
 }
 
-.fallback-text {
-  font-family: var(--font-title);
-  font-size: 1.4rem;
-  color: #5A3A1A;
-  line-height: 1.3;
-}
-
-/* --- Hoja 3D que se voltea (Page Flip Leaf) --- */
 .page-leaf {
   position: absolute;
   top: 0;
@@ -346,170 +174,111 @@
 
 .leaf-face {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
-  height: 100%;
   backface-visibility: hidden;
-  overflow: hidden;
-  background-color: #FAFAF7;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
 }
 
-.leaf-front {
-  z-index: 2;
-}
+.leaf-front { z-index: 2; }
+.leaf-back { transform: rotateY(180deg); }
 
-.leaf-back {
-  transform: rotateY(180deg);
-  z-index: 1;
-}
-
-/* Sombra progresiva al pasar la hoja */
 .page-leaf::after {
   content: '';
   position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
+  inset: 0;
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, transparent 20%, transparent 80%, rgba(0, 0, 0, 0.1) 100%);
   pointer-events: none;
 }
 
+@keyframes flipForward {
+  to { transform: rotateY(-180deg); }
+}
 
-/* --- Responsive / Modo Móvil (1 Plana Individual) --- */
+@keyframes flipBackward {
+  to { transform: rotateY(180deg); }
+}
+
+/* --- Libro móvil --- */
+.book-mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.book-mobile .reader-top-bar {
+  width: 95%;
+  max-width: 480px;
+}
+
+.book-mobile-counter {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--wood-text);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(139, 94, 60, 0.3);
+}
+
+.book-mobile-stage {
+  position: relative;
+  width: 96%;
+  max-width: 480px;
+  touch-action: pan-y;
+}
+
+.book-mobile-page {
+  background: var(--paper);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(61, 43, 31, 0.22);
+  border: 2px solid rgba(139, 94, 60, 0.2);
+  animation: mobilePageFade 0.25s ease-out;
+}
+
+.book-mobile-page img {
+  width: 100%;
+}
+
+.book-mobile .page-arrow {
+  position: absolute;
+  top: 50%;
+  width: 50px;
+  translate: 0 -50%;
+}
+
+.book-mobile .page-arrow-prev { left: -8px; }
+.book-mobile .page-arrow-next { right: -8px; }
+
+.book-mobile-hint {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--wood-ink);
+  opacity: 0.85;
+}
+
+@keyframes mobilePageFade {
+  from { opacity: 0.5; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 @media (max-width: 768px) {
-  .reader-container {
-    width: 100%;
-    padding: 8px 10px 30px 10px;
+  .reader {
+    padding: 8px 10px 30px;
   }
 
-  .cover-view {
-    gap: 16px;
-    margin: 4px auto;
-  }
-
-  .story-reader-cover-box {
+  .reader-cover {
     max-width: 330px;
     gap: 12px;
   }
 
-  .btn-start-wood {
+  .reader-start {
     margin-top: -24px;
-  }
-
-  .btn-start-img {
     max-width: 280px;
-  }
-
-  .btn-back-wood {
-    padding: 4px 8px;
-    gap: 6px;
-  }
-
-  .btn-back-arrow-img {
-    width: 38px;
-  }
-
-  .btn-back-text {
-    font-size: 0.95rem;
-  }
-
-  /* Vista de lectura en móvil */
-  .mobile-reader-view {
-    width: 100%;
-    gap: 10px;
-  }
-
-  .mobile-top-bar {
-    width: 95%;
-    max-width: 480px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .mobile-page-counter {
-    font-family: 'Rubik', sans-serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: #5A3520;
-    background: rgba(255, 255, 255, 0.7);
-    padding: 4px 12px;
-    border-radius: 12px;
-    border: 1.5px solid rgba(139, 94, 60, 0.3);
-  }
-
-  /* Escenario de 1 plana individual centrada */
-  .mobile-single-page-stage {
-    position: relative;
-    width: 96%;
-    max-width: 480px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    touch-action: pan-y;
-  }
-
-  .mobile-single-page-card {
-    width: 100%;
-    background: #FFFDF8;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 10px 24px rgba(61, 43, 31, 0.22);
-    border: 2px solid rgba(139, 94, 60, 0.2);
-    transition: opacity 0.2s ease, transform 0.2s ease;
-  }
-
-  .page-change-anim {
-    animation: mobilePageFade 0.25s ease-out;
-  }
-
-  @keyframes mobilePageFade {
-    0% {
-      opacity: 0.5;
-      transform: scale(0.98);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  .mobile-page-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: contain;
-  }
-
-  /* Flechas flotantes laterales adaptadas a móvil */
-  .mobile-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 50px;
-    min-width: 50px;
-    z-index: 25;
-  }
-
-  .wood-arrow-prev.mobile-arrow {
-    left: -8px;
-  }
-
-  .wood-arrow-next.mobile-arrow {
-    right: -8px;
-  }
-
-  .mobile-swipe-hint {
-    font-family: 'Rubik', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #4A2E14;
-    opacity: 0.85;
-    text-align: center;
-    margin-top: 4px;
   }
 }

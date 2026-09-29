@@ -1,0 +1,5 @@
+# Copia este archivo como .dev.vars (no se sube a git) para probar el chat en local.
+# En producción: npx wrangler pages secret put GEMINI_API_KEY
+GEMINI_API_KEY=
+# Opcional: modelo de Gemini (por defecto gemini-flash-latest)
+GEMINI_MODEL=

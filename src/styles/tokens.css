@@ -1,0 +1,46 @@
+/* Tokens de diseño. Todo color o tipografía repetida sale de aquí. */
+:root {
+  /* Paleta principal */
+  --color-primary: #F26671;   /* coral */
+  --color-secondary: #F2BB4B; /* dorado */
+  --color-tertiary: #F2D194;  /* durazno */
+  --color-accent: #F28157;    /* naranja */
+  --color-nature: #748A63;    /* verde salvia */
+  --color-info: #547398;      /* azul acero */
+  --color-sky: #8FD5EC;
+
+  /* Maderas y tintas (textos sobre madera y pergamino) */
+  --wood-dark: #3D2210;
+  --wood-ink: #4A2E14;
+  --wood-text: #5A3520;
+  --wood-label: #71492F;
+  --wood-name: #815336;
+  --wood-border: #8B5E3C;
+  --wood-bubble: #6B4226;
+  --wood-bubble-user: #D98A3B;
+  --paper: #FFFDF8;
+  --paper-warm: #F5EDDC;
+  --paper-page: #FAFAF7;
+  --parchment-text: #F5E6D0;
+
+  /* Estados */
+  --color-correct: #A9E9A4;
+  --color-wrong: #EF9A9A;
+
+  /* Texto */
+  --color-text: #3D2B1F;
+  --color-text-light: #7A6B5D;
+
+  /* Tipografía */
+  --font-title: 'Fredoka', 'Nunito', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+  --font-ui: 'Rubik', 'Nunito', sans-serif;
+
+  /* Movimiento */
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Sombras */
+  --shadow-drop: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.22));
+  --shadow-glow: drop-shadow(0 0 20px rgba(255, 230, 100, 0.85));
+}

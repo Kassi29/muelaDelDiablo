@@ -1,0 +1,190 @@
+/* Reset, fondo de cielo, cursor de madera y el encabezado común (banner + navbar). */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scrollbar-color: var(--color-secondary) transparent;
+  /* Cursor de flecha de madera; el navegador vuelve al normal si no puede cargarlo. */
+  cursor: url('/assets/ui/cursor.png') 16 12, auto;
+}
+
+a,
+button,
+[role='button'] {
+  cursor: url('/assets/ui/cursor.png') 16 12, pointer;
+}
+
+:active {
+  cursor: url('/assets/ui/cursor-click.png') 17 14, pointer;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--color-sky) url('/assets/ui/fondo-cielo.webp') center top / cover no-repeat fixed;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-title);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-secondary);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- Encabezado común --- */
+.site-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 0;
+}
+
+.banner-link {
+  width: 100%;
+  max-width: 1100px;
+}
+
+.banner-img {
+  width: 100%;
+  animation: bannerBounce 0.8s var(--ease-bounce) both;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.banner-link:hover .banner-img {
+  transform: scale(1.012);
+  filter: brightness(1.03);
+}
+
+.site-nav {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+}
+
+.navbar-img {
+  width: 100%;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.25));
+}
+
+/* Zonas táctiles invisibles sobre cada palabra del navbar dibujado. */
+.nav-zone {
+  position: absolute;
+  top: 10%;
+  height: 80%;
+  width: 29%;
+  border-radius: 12px;
+}
+
+.nav-zone-seccion-cuentos { left: 4%; }
+.nav-zone-seccion-juegos { left: 35%; }
+.nav-zone-seccion-chats { left: 66%; width: 30%; }
+
+.site-main {
+  width: 100%;
+  max-width: 1450px;
+  flex: 1;
+}
+
+/* --- Botones de madera con texto (atrás / siguiente) --- */
+.wood-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 6px;
+  transition: transform 0.2s var(--ease-bounce);
+}
+
+.wood-link-arrow {
+  width: clamp(40px, 4.5vw, 52px);
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
+}
+
+.wood-link-text {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  line-height: 1;
+  color: var(--wood-label);
+}
+
+.wood-link-back:hover { transform: translateX(-4px) scale(1.04); }
+.wood-link-next:hover { transform: translateX(4px) scale(1.04); }
+.wood-link:active { transform: scale(0.97); }
+
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--wood-text);
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+    background-attachment: scroll;
+  }
+
+  .site-header {
+    padding: 16px 10px 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .wood-link-arrow { width: 38px; }
+  .wood-link-text { font-size: 0.95rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

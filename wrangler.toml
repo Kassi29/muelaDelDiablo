@@ -1,0 +1,10 @@
+# Cloudflare Pages: proyecto "muela" (muela.pages.dev). Los QR impresos apuntan a este dominio.
+name = "muela"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-09-01"
+
+# Tope diario de mensajes por IP para el chat (opcional).
+# Crea el namespace con `npx wrangler kv namespace create CHAT_LIMITS` y pega aquí el id.
+# [[kv_namespaces]]
+# binding = "CHAT_LIMITS"
+# id = "<id-del-namespace>"

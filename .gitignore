@@ -10,7 +10,11 @@ node_modules/
 .env.test.local
 .env.production.local
 *.env
-!.env.example
+.dev.vars
+.wrangler/
+
+# Originales del diseñador: viven fuera del repo (../muela-assets-src). Ver scripts/optimize-images.mjs
+PÁGINA WEB/
 
 # Producción y Builds
 dist/

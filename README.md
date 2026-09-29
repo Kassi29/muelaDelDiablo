@@ -1,81 +1,70 @@
-# 📚 La Muela del Diablo y Otros
+# La Muela del Diablo y otros cuentitos
 
-Plataforma interactiva infantil (diseñada para niños de 9-10 años) basada en el cuento **El Conejito Llorón**. Los niños pueden leer la historia en un formato interactivo de páginas, jugar retos divertidos relacionados con la trama y chatear con el Conejito Llorón usando Inteligencia Artificial.
+Web para niños con 5 cuentos bolivianos ilustrados. Para cada cuento hay:
+- un lector
+- tres minijuegos: ordenar la historia, encontrar diferencias y búsqueda mágica
+- un chat con su personaje, que funciona con Google Gemini
 
----
+**Stack:** React 19, React Router 8, TypeScript y Vite 5. Se publica en Cloudflare Pages y el chat corre en una Pages Function.
 
-## 🎨 Características Principales
+## Desarrollo
 
-1. **Lectura Interactiva**: Lector estilo libro físico con navegación por flechas grandes y 4 páginas ilustradas vectoriales de alta definición.
-2. **Tres Actividades Educativas**:
-   - **Ordenar la Historia**: Arrastrar y colocar los sucesos del cuento en orden cronológico.
-   - **Encuentra Diferencias**: Comparar dos imágenes similares y encontrar los cambios (MVP implementado listo para recibir tus ilustraciones finales).
-   - **Encuentra las Zanahorias**: Buscar y recolectar las zanahorias escondidas en la escena del bosque.
-3. **Chat con el Conejito Llorón (IA)**:
-   - Impulsado por la API de **Google Gemini**.
-   - El Conejito tiene un comportamiento estructurado: es dulce, family-friendly, responde basándose estrictamente en el contenido de su cuento y jamás sale de su rol.
-   - Cuenta con **modo simulado offline** si no configuras una API key.
+Necesitas Node.js 22.22 o superior.
 
----
-
-## 🛠️ Requisitos Previos
-
-- **Node.js** (versión 18 o superior)
-- **NPM** (incluido con Node.js)
-
----
-
-## 🚀 Instrucciones de Configuración y Ejecución
-
-Sigue estos sencillos pasos para levantar el proyecto localmente:
-
-### 1. Instalar Dependencias
-Abre tu terminal en la carpeta raíz del proyecto (`c:\workspace\natata`) y ejecuta:
 ```bash
 npm install
+cp .dev.vars.example .dev.vars   # pon tu GEMINI_API_KEY (sin llave el chat usa respuestas de ejemplo)
+npm run dev                      # abre http://localhost:5173
 ```
 
-### 2. Generar las Ilustraciones Vectoriales
-Hemos creado un script que genera automáticamente las carpetas de recursos y crea hermosas ilustraciones vectoriales (SVG) para todas las páginas del libro y del juego. Ejecútalo corriendo:
-```bash
-node copy-assets.js
-```
+| Comando | Qué hace |
+|---|---|
+| `npm run dev` | Levanta Vite (web) y `wrangler pages dev` (API del chat) |
+| `npm run build` | Revisa tipos y compila en `dist/` |
+| `npm run preview` | Sirve `dist/` igual que en Cloudflare |
+| `npm run deploy` | Publica en Cloudflare Pages |
+| `npm run optimize:images` | Regenera `public/assets` desde los originales |
 
-### 3. Configurar la API Key de Gemini
-1. Crea un archivo llamado `.env` en la raíz del proyecto (puedes copiar el archivo `.env.example`):
+## Imágenes
+
+Los originales del diseñador (PNG de hasta 6000 px y SVG con PNG adentro) no están en el repo. Viven en `../muela-assets-src/`.
+
+`scripts/optimize-images.mjs` los convierte a WebP con el tamaño real de uso y nombres limpios. El resultado va a `public/assets/`, que pasa de unos 190 MB a unos 8 MB.
+
+Para agregar o cambiar una imagen:
+1. Edita la lista `jobs` del script.
+2. Corre `npm run optimize:images`.
+
+## Chat con los personajes
+
+- **La llave nunca llega al navegador.** Solo la lee `functions/api/chat.ts`, que corre en Cloudflare.
+- **Límites** (`shared/chat-limits.ts`):
+  - 200 caracteres por mensaje.
+  - 10 turnos de contexto.
+  - Respuestas de 450 caracteres como máximo.
+  - Tope diario por IP, si configuras KV.
+- **Personalidad y seguridad** (`shared/prompt.ts`): lenguaje para niños de 6 a 10 años y 2-3 oraciones por respuesta. El personaje:
+  - no pide ni repite datos personales;
+  - desvía los temas no aptos;
+  - sugiere hablar con un adulto de confianza si el niño está triste o en peligro;
+  - no sale del personaje aunque se lo pidan.
+- **Filtros de Gemini:** `BLOCK_LOW_AND_ABOVE` en las cuatro categorías de contenido.
+
+### Poner en producción
+
+1. Guarda la llave como secreto:
    ```bash
-   cp .env.example .env
+   npx wrangler pages secret put GEMINI_API_KEY
    ```
-2. Abre el archivo `.env` y coloca tu API Key de Google Gemini en la variable `GEMINI_API_KEY`:
-   ```env
-   GEMINI_API_KEY=tu_clave_api_aqui
+2. (Opcional) Elige el modelo. En el dashboard de Pages, en Settings → Variables, crea `GEMINI_MODEL`. Por defecto se usa `gemini-flash-latest`.
+3. (Opcional) Activa el tope diario por IP:
+   ```bash
+   npx wrangler kv namespace create CHAT_LIMITS
    ```
-   *Nota: Si no agregas la API key, el chat funcionará de todas maneras usando respuestas de simulación offline para que puedas probar el juego sin problemas.*
+   Pega el id en `wrangler.toml`. El plan gratis de KV permite 1.000 escrituras al día, o sea unos 1.000 mensajes en total.
+4. En Cloudflare, ve a Security → WAF → Rate limiting rules y crea una regla para `/api/chat`: unas 10 solicitudes cada 10 s por IP, y si se pasa, bloquear.
+5. En Google AI Studio, define un límite de gasto o cuota para la llave. Es el tope real de costo.
 
-### 4. Iniciar la Aplicación
-Para ejecutar el servidor frontend de desarrollo (Vite) y el servidor backend de chat (Express) al mismo tiempo, solo corre:
-```bash
-npm start
-```
+## Códigos QR
 
-- La interfaz interactiva se abrirá en tu navegador en: [http://localhost:5173](http://localhost:5173)
-- El backend del chat de IA correrá en: [http://localhost:3000](http://localhost:3000)
-
----
-
-## 🎨 Personalización del Diseño (Colores)
-
-La paleta de colores del proyecto se rige por un **Design System** configurable mediante variables CSS. Si deseas cambiar el aspecto estético, solo debes modificar los tokens en el archivo:
-
-👉 `src/styles/index.css` (líneas 6 a 12):
-```css
-:root {
-  --color-primary:     #F26671;   /* Coral rosado */
-  --color-secondary:   #F2BB4B;   /* Dorado cálido */
-  --color-tertiary:    #F2D194;   /* Durazno claro */
-  --color-accent:      #F28157;   /* Naranja */
-  --color-nature:      #748A63;   /* Verde salvia */
-  --color-info:        #547398;   /* Azul acero */
-}
-```
-Cualquier cambio aquí se propagará automáticamente a todas las pantallas de la aplicación.
+Los QR impresos apuntan a `https://muela.pages.dev/actividades/ordenar?story=<id>`. Las rutas están en `src/paths.ts` y **no se pueden cambiar**. Para generar QR nuevos usa `qrGenerator/`.
