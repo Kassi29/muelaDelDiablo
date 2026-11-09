@@ -486,7 +486,7 @@
 
   .chat-mobile-slot-btn {
     position: absolute;
-    left: 22.0%;
+    left: 22%;
     width: 66.5%;
     background: transparent;
     border: none;
@@ -696,7 +696,7 @@
     top: 24.2%;
     bottom: 25.4%;
     left: 22.5%;
-    width: 66.0%;
+    width: 66%;
     overflow-y: auto;
     overflow-x: hidden;
     display: flex;
@@ -736,7 +736,7 @@
     max-width: 86%;
     padding: 6px 11px;
     font-family: "Rubik", sans-serif;
-    font-size: clamp(0.72rem, 3.0vw, 0.95rem);
+    font-size: clamp(0.72rem, 3vw, 0.95rem);
     line-height: 1.35;
     word-break: break-word;
     overflow-wrap: anywhere;
@@ -773,7 +773,7 @@
   .chat-mobile-typing {
     position: absolute;
     bottom: 26.2%;
-    left: 24.0%;
+    left: 24%;
     display: flex;
     gap: 4px;
     align-items: center;
@@ -828,7 +828,7 @@
     font-weight: 700;
     color: #4a2a12;
     text-transform: uppercase;
-    font-size: clamp(0.72rem, 3.0vw, 1.0rem);
+    font-size: clamp(0.72rem, 3vw, 1rem);
     outline: none;
     padding: 0 4px;
     box-sizing: border-box;
@@ -853,7 +853,9 @@
     cursor: pointer;
     outline: none;
     padding: 0;
-    transition: background 0.15s ease, transform 0.1s ease;
+    transition:
+      background 0.15s ease,
+      transform 0.1s ease;
   }
 
   .chat-mobile-send-trigger:active {
