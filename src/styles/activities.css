@@ -741,23 +741,98 @@
 .activity-win-banner-overlay {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(252, 247, 237, 0.85);
+  background: rgba(252, 247, 237, 0.88);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 100;
   backdrop-filter: blur(4px);
-  gap: 20px;
+  gap: 16px;
   border-radius: 20px;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .win-banner-img {
-  width: 90%;
-  max-width: 600px;
+  width: 85%;
+  max-width: 520px;
   height: auto;
   filter: drop-shadow(0 12px 24px rgba(0,0,0,0.25));
   animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Indicador de tiempo en la barra superior */
+.game-timer-badge {
+  background: #fff8ee;
+  border: 2px solid #8B5E3C;
+  color: #5A3520;
+  font-family: 'Fredoka', cursive;
+  font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 24px;
+  box-shadow: 0 4px 10px rgba(90, 53, 32, 0.15);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  user-select: none;
+}
+
+/* Caja de estadísticas en la pantalla de victoria */
+.activity-win-stats-box {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  animation: fade-in-up 0.5s ease 0.2s forwards;
+  opacity: 0;
+}
+
+.win-stat-chip {
+  background: #fdf6ec;
+  border: 2px solid #8B5E3C;
+  color: #5A3520;
+  font-family: 'Fredoka', cursive;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(90, 53, 32, 0.15);
+}
+
+/* Fila de acciones al ganar */
+.win-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  animation: fade-in-up 0.5s ease 0.35s forwards;
+  opacity: 0;
+}
+
+.win-metrics-link-btn {
+  background: #27ae60;
+  color: #ffffff !important;
+  text-decoration: none;
+  font-family: 'Fredoka', cursive;
+  font-size: clamp(0.95rem, 1.6vw, 1.2rem);
+  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 24px;
+  box-shadow: 0 4px 14px rgba(39, 174, 96, 0.35);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.win-metrics-link-btn:hover {
+  background: #219653;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 18px rgba(39, 174, 96, 0.45);
 }
 
 .win-next-arrow-btn {
@@ -765,16 +840,44 @@
   border: none;
   cursor: pointer;
   transition: transform 0.2s ease;
-  animation: fade-in-up 0.5s ease 0.3s forwards;
-  opacity: 0;
 }
 .win-next-arrow-btn:hover {
   transform: scale(1.1);
 }
 .win-next-arrow-btn img {
-  width: 120px;
+  width: clamp(90px, 14vw, 120px);
   height: auto;
   filter: drop-shadow(0 6px 12px rgba(0,0,0,0.2));
+}
+
+/* Botón flotante/enlace a métricas en la página principal de actividades */
+.activities-metrics-banner {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-metrics-hub {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff8ee;
+  border: 2px solid #8B5E3C;
+  color: #5A3520 !important;
+  text-decoration: none;
+  font-family: 'Fredoka', cursive;
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 28px;
+  box-shadow: 0 6px 16px rgba(90, 53, 32, 0.18);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-metrics-hub:hover {
+  background: #faebd7;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 22px rgba(90, 53, 32, 0.25);
 }
 
 @keyframes pop-in {

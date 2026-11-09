@@ -5,7 +5,7 @@ export function renderActivities(container) {
     <div class="activities-page-container anim-fade-in">
       <div class="page-title-box">
         <h2 class="page-title">🎈 Zona de Juegos</h2>
-        <p class="page-subtitle">Demuestra cuánto sabes del cuento del Conejito Llorón</p>
+        <p class="page-subtitle">Demuestra cuánto sabes de los cuentos con estas divertidas actividades</p>
       </div>
       
       <div class="activities-grid">
@@ -47,9 +47,10 @@ export function renderActivities(container) {
 
   // Evento para navegar a cada actividad al hacer click en la tarjeta o botón
   container.querySelectorAll('.activity-card').forEach(card => {
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
+      // Evitar doble navegación si se hace click directamente en el botón
       const target = card.getAttribute('data-target');
-      navigateTo(target);
+      if (target) navigateTo(target);
     });
   });
 }

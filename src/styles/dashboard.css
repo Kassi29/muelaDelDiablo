@@ -1,0 +1,492 @@
+/* ==========================================================================
+   DASHBOARD DE MÉTRICAS — ESTILOS
+   Compatible con la identidad visual cálida de Natata (madera, papiro, Fredoka/Nunito)
+   ========================================================================== */
+
+.dashboard-page-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 16px 60px 16px;
+  box-sizing: border-box;
+}
+
+/* Encabezado */
+.dashboard-header {
+  margin-bottom: 24px;
+}
+
+.dashboard-top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.dashboard-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff8ee;
+  border: 2px solid #8B5E3C;
+  color: #5A3520 !important;
+  text-decoration: none;
+  font-family: 'Fredoka', cursive;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(90, 53, 32, 0.12);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.dashboard-back-btn:hover {
+  background: #faebd7;
+  transform: translateY(-2px);
+}
+
+.dashboard-back-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.dashboard-actions-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-excel-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #27ae60;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-family: 'Fredoka', cursive;
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 22px;
+  box-shadow: 0 4px 14px rgba(39, 174, 96, 0.35);
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-excel-download:hover {
+  background: #219653;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(39, 174, 96, 0.45);
+}
+
+.btn-excel-download:active {
+  transform: scale(0.97);
+}
+
+.btn-clear-metrics {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff0f0;
+  color: #c0392b;
+  border: 1.5px solid #e74c3c;
+  cursor: pointer;
+  font-family: 'Fredoka', cursive;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 9px 18px;
+  border-radius: 20px;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.btn-clear-metrics:hover {
+  background: #fde2e2;
+  transform: translateY(-1px);
+}
+
+.dashboard-title-box {
+  background: #fff8ee;
+  border: 3px solid #8B5E3C;
+  border-radius: 24px;
+  padding: 24px 28px;
+  box-shadow: 0 8px 24px rgba(90, 53, 32, 0.15);
+  text-align: center;
+}
+
+.dashboard-title {
+  font-family: 'Fredoka', cursive;
+  font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+  color: #5A3520;
+  margin-bottom: 6px;
+}
+
+.dashboard-subtitle {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  color: #71492f;
+  margin: 0;
+}
+
+/* Tarjetas resumen (KPIs) */
+.dashboard-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.kpi-card {
+  background: #fffdf8;
+  border: 2px solid #8B5E3C;
+  border-radius: 18px;
+  padding: 18px 14px;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(90, 53, 32, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(90, 53, 32, 0.16);
+}
+
+.kpi-icon {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+
+.kpi-value {
+  font-family: 'Fredoka', cursive;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #5A3520;
+  line-height: 1.2;
+}
+
+.kpi-label {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #8b5830;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+/* Barra de filtros */
+.dashboard-filters-card {
+  background: #fff8ee;
+  border: 2px solid #8B5E3C;
+  border-radius: 20px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 14px rgba(90, 53, 32, 0.08);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.filters-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filters-label {
+  font-family: 'Fredoka', cursive;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #5A3520;
+  margin-right: 4px;
+}
+
+.filter-chip-btn {
+  background: #fdf6ec;
+  border: 1.5px solid #d4a779;
+  color: #71492f;
+  font-family: 'Fredoka', cursive;
+  font-size: 0.92rem;
+  padding: 6px 14px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-chip-btn:hover {
+  background: #faebd7;
+}
+
+.filter-chip-btn.active {
+  background: #8B5E3C;
+  color: #ffffff;
+  border-color: #5A3520;
+  box-shadow: 0 2px 8px rgba(90, 53, 32, 0.25);
+}
+
+.story-select-filter {
+  background: #fdf6ec;
+  border: 1.5px solid #d4a779;
+  color: #5A3520;
+  font-family: 'Fredoka', cursive;
+  font-size: 0.95rem;
+  padding: 7px 14px;
+  border-radius: 16px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Tarjeta contenedora de la tabla */
+.dashboard-table-card {
+  background: #fffdf8;
+  border: 2px solid #8B5E3C;
+  border-radius: 22px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(90, 53, 32, 0.12);
+  overflow: hidden;
+}
+
+.table-header-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.table-title {
+  font-family: 'Fredoka', cursive;
+  font-size: 1.3rem;
+  color: #5A3520;
+  margin: 0;
+}
+
+.table-counter-badge {
+  background: #8B5E3C;
+  color: #ffffff;
+  font-family: 'Fredoka', cursive;
+  font-size: 0.9rem;
+  padding: 4px 12px;
+  border-radius: 14px;
+}
+
+/* Tabla con scroll horizontal responsivo */
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 14px;
+}
+
+.metrics-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: 'Nunito', sans-serif;
+  text-align: left;
+}
+
+.metrics-table th {
+  background: #8B5E3C;
+  color: #ffffff;
+  font-family: 'Fredoka', cursive;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 12px 14px;
+  white-space: nowrap;
+}
+
+.metrics-table th:first-child {
+  border-top-left-radius: 12px;
+}
+
+.metrics-table th:last-child {
+  border-top-right-radius: 12px;
+}
+
+.metrics-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #ebd9c5;
+  color: #4a2a12;
+  font-size: 0.95rem;
+  vertical-align: middle;
+}
+
+.metrics-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.metrics-table tbody tr:hover {
+  background: #fff8ee;
+}
+
+.metrics-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Badges para celdas */
+.game-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-family: 'Fredoka', cursive;
+  font-size: 0.88rem;
+  padding: 4px 10px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.badge-order {
+  background: #e8f4fd;
+  color: #2980b9;
+  border: 1px solid #aed6f1;
+}
+
+.badge-differences {
+  background: #fef5e7;
+  color: #d35400;
+  border: 1px solid #fad7a0;
+}
+
+.badge-find {
+  background: #eafaf1;
+  color: #27ae60;
+  border: 1px solid #a9dfbf;
+}
+
+.time-badge {
+  font-family: 'Fredoka', cursive;
+  font-weight: 700;
+  color: #5A3520;
+  background: #fff0d9;
+  padding: 3px 10px;
+  border-radius: 10px;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.attempt-badge {
+  font-weight: 700;
+  color: #5A3520;
+}
+
+.error-badge {
+  font-weight: 700;
+}
+.error-badge.has-errors {
+  color: #c0392b;
+}
+.error-badge.no-errors {
+  color: #27ae60;
+}
+
+/* Estado vacío cuando no hay métricas */
+.empty-state-container {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.empty-state-icon {
+  font-size: 3.5rem;
+  margin-bottom: 12px;
+}
+
+.empty-state-title {
+  font-family: 'Fredoka', cursive;
+  font-size: 1.4rem;
+  color: #5A3520;
+  margin-bottom: 8px;
+}
+
+.empty-state-desc {
+  font-family: 'Nunito', sans-serif;
+  color: #71492f;
+  max-width: 440px;
+  margin: 0 auto 20px auto;
+  font-size: 1rem;
+}
+
+.btn-go-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f26671;
+  color: #ffffff !important;
+  text-decoration: none;
+  font-family: 'Fredoka', cursive;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 22px;
+  box-shadow: 0 4px 14px rgba(242, 102, 113, 0.35);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.btn-go-play:hover {
+  background: #e04f5b;
+  transform: translateY(-2px);
+}
+
+/* Adaptación responsiva para móviles */
+@media (max-width: 768px) {
+  .dashboard-page-container {
+    padding: 12px 10px 50px 10px;
+  }
+
+  .dashboard-title-box {
+    padding: 18px 16px;
+  }
+
+  .dashboard-top-nav {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dashboard-actions-header {
+    justify-content: stretch;
+  }
+
+  .btn-excel-download,
+  .btn-clear-metrics {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .kpi-card {
+    padding: 14px 10px;
+  }
+
+  .kpi-value {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-filters-card {
+    padding: 14px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters-group {
+    justify-content: center;
+  }
+
+  .story-select-filter {
+    width: 100%;
+  }
+
+  .metrics-table th,
+  .metrics-table td {
+    padding: 10px 8px;
+    font-size: 0.85rem;
+  }
+}

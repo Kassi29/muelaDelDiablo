@@ -1,5 +1,6 @@
 import { navigateTo } from '../router.js';
 import { storiesData } from '../data/stories.js';
+import { saveMetric, formatTime } from '../lib/metrics.js';
 
 // Helper para leer storyId de la URL
 function getStoryId() {
@@ -14,6 +15,31 @@ export function renderActivityOrder(container) {
   // Desordenar la secuencia para el juego
   const shuffled = [...correctSequence].sort(() => Math.random() - 0.5);
 
+  // Variables de métricas
+  const startTime = Date.now();
+  let timerInterval = null;
+  let attempts = 0;
+  let errorsCount = 0;
+  let isGameFinished = false;
+
+  function stopTimer() {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+  }
+
+  function startTimer() {
+    stopTimer();
+    const timerEl = container.querySelector('#game-timer');
+    timerInterval = setInterval(() => {
+      if (!isGameFinished && timerEl) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        timerEl.textContent = `⏱ ${formatTime(elapsed)}`;
+      }
+    }, 1000);
+  }
+
   function renderGame() {
     container.innerHTML = `
       <div class="game-layout anim-fade-in">
@@ -22,6 +48,7 @@ export function renderActivityOrder(container) {
             <img src="/assets/boton retroceder.png" alt="Atrás" class="btn-nav-arrow-img" />
             <span class="btn-nav-text">Atrás</span>
           </button>
+          <div class="game-timer-badge" id="game-timer" title="Tiempo transcurrido">⏱ 00:00</div>
           <button class="btn-game-nav btn-nav-next" id="next-game-btn" title="Siguiente Actividad" aria-label="Siguiente Actividad">
             <span class="btn-nav-text">Siguiente Actividad</span>
             <img src="/assets/juegos/flecha siguiente activdad.png" alt="Siguiente Actividad" class="btn-nav-arrow-img" />
@@ -56,6 +83,8 @@ export function renderActivityOrder(container) {
       </div>
     `;
 
+    startTimer();
+
     // Inicializar SortableJS
     const el = document.getElementById('sortable-list');
 
@@ -77,11 +106,12 @@ export function renderActivityOrder(container) {
   }
 
   function goBack() {
-    // Desde el primer juego, volver al cuento
+    stopTimer();
     navigateTo(`/cuento/${storyId}`);
   }
 
   function goNext() {
+    stopTimer();
     navigateTo(`/actividades/diferencias?story=${storyId}`);
   }
 
@@ -93,12 +123,30 @@ export function renderActivityOrder(container) {
   }
 
   function verifyOrder(listEl) {
+    if (isGameFinished) return;
+    attempts++;
+
     const currentOrder = Array.from(listEl.querySelectorAll('.order-item')).map(item => item.getAttribute('data-id'));
     const isCorrect = currentOrder.every((id, index) => id === correctSequence[index].id);
 
     if (isCorrect) {
-      showWinScreen();
+      isGameFinished = true;
+      stopTimer();
+      const elapsedSeconds = (Date.now() - startTime) / 1000;
+
+      // Guardar métrica automáticamente
+      saveMetric({
+        gameType: 'order',
+        storyId: story.id,
+        storyTitle: story.title,
+        attempts: attempts,
+        timeSeconds: elapsedSeconds,
+        errorsCount: errorsCount
+      });
+
+      showWinScreen(elapsedSeconds, attempts);
     } else {
+      errorsCount++;
       // Mostrar feedback visual de error
       const items = listEl.querySelectorAll('.order-item');
       items.forEach((item, index) => {
@@ -114,14 +162,16 @@ export function renderActivityOrder(container) {
 
       // Efecto temblor en el botón
       const btn = document.getElementById('verify-btn');
-      btn.style.animation = 'wiggle 0.3s ease';
-      setTimeout(() => {
-        btn.style.animation = '';
-      }, 300);
+      if (btn) {
+        btn.style.animation = 'wiggle 0.3s ease';
+        setTimeout(() => {
+          btn.style.animation = '';
+        }, 300);
+      }
     }
   }
 
-  function showWinScreen() {
+  function showWinScreen(elapsedSeconds, finalAttempts) {
     const gameContainer = container.querySelector('.game-container');
     if (gameContainer) {
       gameContainer.style.position = 'relative';
@@ -129,9 +179,15 @@ export function renderActivityOrder(container) {
       overlay.className = 'activity-win-banner-overlay anim-fade-in';
       overlay.innerHTML = `
         <img src="/assets/juegos/juegos elementos pag/bien hecho (1).png" alt="Bien Hecho" class="win-banner-img" />
-        <button class="win-next-arrow-btn" id="overlay-next-btn" title="Siguiente Actividad">
-          <img src="/assets/juegos/flecha siguiente activdad.png" alt="Siguiente Actividad" />
-        </button>
+        <div class="activity-win-stats-box">
+          <span class="win-stat-chip">⏱️ ${formatTime(elapsedSeconds)}</span>
+          <span class="win-stat-chip">🎯 ${finalAttempts} ${finalAttempts === 1 ? 'intento' : 'intentos'}</span>
+        </div>
+        <div class="win-actions-row">
+          <button class="win-next-arrow-btn" id="overlay-next-btn" title="Siguiente Actividad">
+            <img src="/assets/juegos/flecha siguiente activdad.png" alt="Siguiente Actividad" />
+          </button>
+        </div>
       `;
       gameContainer.appendChild(overlay);
       

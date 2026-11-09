@@ -1,5 +1,6 @@
 import { navigateTo } from '../router.js';
 import { storiesData } from '../data/stories.js';
+import { saveMetric, formatTime } from '../lib/metrics.js';
 
 function getStoryId() {
   return new URLSearchParams(window.location.search).get('story') || 'conejito-lloron';
@@ -10,7 +11,30 @@ export function renderActivityDifferences(container) {
   const story = storiesData.find(s => s.id === storyId) || storiesData.find(s => s.id === 'conejito-lloron');
   const differencesList = story.gameData.differences.items;
   let foundDifferences = [];
-  
+
+  // Variables de métricas
+  const startTime = Date.now();
+  let timerInterval = null;
+  let isGameFinished = false;
+
+  function stopTimer() {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+  }
+
+  function startTimer() {
+    stopTimer();
+    const timerEl = container.querySelector('#game-timer');
+    timerInterval = setInterval(() => {
+      if (!isGameFinished && timerEl) {
+        const elapsed = (Date.now() - startTime) / 1000;
+        timerEl.textContent = `⏱ ${formatTime(elapsed)}`;
+      }
+    }, 1000);
+  }
+
   function renderGame() {
     container.innerHTML = `
       <div class="game-layout anim-fade-in">
@@ -19,6 +43,7 @@ export function renderActivityDifferences(container) {
             <img src="/assets/boton retroceder.png" alt="Atrás" class="btn-nav-arrow-img" />
             <span class="btn-nav-text">Atrás</span>
           </button>
+          <div class="game-timer-badge" id="game-timer" title="Tiempo transcurrido">⏱ 00:00</div>
           <button class="btn-game-nav btn-nav-next" id="next-game-btn" title="Siguiente Actividad" aria-label="Siguiente Actividad">
             <span class="btn-nav-text">Siguiente Actividad</span>
             <img src="/assets/juegos/flecha siguiente activdad.png" alt="Siguiente Actividad" class="btn-nav-arrow-img" />
@@ -54,6 +79,7 @@ export function renderActivityDifferences(container) {
       </div>
     `;
 
+    startTimer();
     setupInteraction();
 
     document.getElementById('exit-btn').addEventListener('click', goBack);
@@ -61,10 +87,12 @@ export function renderActivityDifferences(container) {
   }
 
   function goBack() {
+    stopTimer();
     navigateTo(`/actividades/ordenar?story=${storyId}`);
   }
 
   function goNext() {
+    stopTimer();
     navigateTo(`/actividades/zanahorias?story=${storyId}`);
   }
 
@@ -75,6 +103,8 @@ export function renderActivityDifferences(container) {
     const overlayRight = document.getElementById('overlay-right');
 
     const handleInteraction = (e, paneElement) => {
+      if (isGameFinished) return;
+
       const rect = paneElement.getBoundingClientRect();
       const xPercent = ((e.clientX - rect.left) / rect.width) * 100;
       const yPercent = ((e.clientY - rect.top) / rect.height) * 100;
@@ -137,11 +167,25 @@ export function renderActivityDifferences(container) {
       scoreInd.textContent = `Encontradas: ${foundDifferences.length} / 5`;
     }
     if (foundDifferences.length === differencesList.length) {
-      setTimeout(showWinScreen, 600);
+      isGameFinished = true;
+      stopTimer();
+      const elapsedSeconds = (Date.now() - startTime) / 1000;
+
+      // Guardar métrica automáticamente (solo tiempo, sin errores ni intentos repetidos)
+      saveMetric({
+        gameType: 'differences',
+        storyId: story.id,
+        storyTitle: story.title,
+        attempts: 1,
+        timeSeconds: elapsedSeconds,
+        errorsCount: 0
+      });
+
+      setTimeout(() => showWinScreen(elapsedSeconds), 600);
     }
   }
 
-  function showWinScreen() {
+  function showWinScreen(elapsedSeconds) {
     const gameLayout = container.querySelector('.game-layout');
     if (gameLayout) {
       gameLayout.style.position = 'relative';
@@ -149,9 +193,14 @@ export function renderActivityDifferences(container) {
       overlay.className = 'activity-win-banner-overlay anim-fade-in';
       overlay.innerHTML = `
         <img src="/assets/juegos/juegos elementos pag/bien hecho (1).png" alt="Bien Hecho" class="win-banner-img" />
-        <button class="win-next-arrow-btn" id="overlay-next-btn" title="Siguiente Actividad">
-          <img src="/assets/juegos/flecha siguiente activdad.png" alt="Siguiente Actividad" />
-        </button>
+        <div class="activity-win-stats-box">
+          <span class="win-stat-chip">⏱️ ${formatTime(elapsedSeconds)}</span>
+        </div>
+        <div class="win-actions-row">
+          <button class="win-next-arrow-btn" id="overlay-next-btn" title="Siguiente Actividad">
+            <img src="/assets/juegos/flecha siguiente activdad.png" alt="Siguiente Actividad" />
+          </button>
+        </div>
       `;
       gameLayout.appendChild(overlay);
       

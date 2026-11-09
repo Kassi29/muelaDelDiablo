@@ -7,6 +7,7 @@ import { renderActivityOrder } from './pages/activity-order.js';
 import { renderActivityDifferences } from './pages/activity-differences.js';
 import { renderActivityFind } from './pages/activity-find.js';
 import { renderChat } from './pages/chat.js';
+import { renderDashboard } from './pages/dashboard.js';
 
 const routes = {
   '/': renderHome,
@@ -15,7 +16,8 @@ const routes = {
   '/actividades/ordenar': renderActivityOrder,
   '/actividades/diferencias': renderActivityDifferences,
   '/actividades/zanahorias': renderActivityFind,
-  '/chat': renderChat
+  '/chat': renderChat,
+  '/metricas': renderDashboard
 };
 
 export function initRouter() {
@@ -44,8 +46,17 @@ export function initRouter() {
     <main id="router-view" class="anim-fade-in"></main>
   `;
 
-  // Escuchar navegación por botones/enlaces
+  // Escuchar navegación por botones/enlaces y hash
   window.addEventListener('popstate', handleRoute);
+  window.addEventListener('hashchange', handleRoute);
+
+  // Atajo de teclado para administrador (Alt + M) para abrir métricas directamente
+  window.addEventListener('keydown', (e) => {
+    if (e.altKey && (e.key === 'm' || e.key === 'M')) {
+      e.preventDefault();
+      navigateTo('/metricas');
+    }
+  });
 
   // Interceptar clicks en links con [data-link]
   document.body.addEventListener('click', e => {
@@ -92,8 +103,20 @@ export function navigateTo(url) {
 }
 
 function handleRoute() {
-  const path = window.location.pathname;
+  let rawPath = window.location.pathname;
+
+  // Soporte para hash routing (ej. #/metricas o #metricas)
+  if (window.location.hash) {
+    const cleanHash = window.location.hash.replace(/^#\/?/, '/');
+    if (cleanHash && cleanHash !== '/') {
+      rawPath = cleanHash;
+    }
+  }
+
+  // Normalizar ruta: minúsculas, sin trailing slash y sin query params
+  const cleanPath = (rawPath.toLowerCase().replace(/\/+$/, '') || '/').split('?')[0];
   const routerView = document.getElementById('router-view');
+  if (!routerView) return;
 
   // Limpiar vista y aplicar animación de transición
   routerView.classList.remove('anim-fade-in');
@@ -103,13 +126,13 @@ function handleRoute() {
   // Renderizar según ruta (Soporte dinámico para /cuento/:id)
   routerView.innerHTML = '';
 
-  const cuentoMatch = path.match(/^\/cuento\/(.+)$/);
+  const cuentoMatch = cleanPath.match(/^\/cuento\/(.+)$/);
   if (cuentoMatch) {
     renderStoryReader(routerView, cuentoMatch[1]);
-  } else if (path === '/lector') {
+  } else if (cleanPath === '/lector') {
     renderStoryReader(routerView);
   } else {
-    const renderer = routes[path] || renderHome;
+    const renderer = routes[cleanPath] || renderHome;
     renderer(routerView);
   }
 
